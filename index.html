@@ -1,0 +1,32 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#123f3b" />
+    <title>Scanly — Barcode scanner</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <div class="app-shell">
+      <header class="topbar">
+        <a class="brand" href="#home" aria-label="Scanly home"><span class="brand-mark">⌁</span>scanly</a>
+        <button class="icon-button" id="theme-toggle" aria-label="Toggle theme">☼</button>
+      </header>
+
+      <main id="app" tabindex="-1"></main>
+
+      <nav class="bottom-nav" aria-label="Main navigation">
+        <a href="#home" data-nav="home"><span>⌂</span>Home</a>
+        <a href="#scan" data-nav="scan"><span>⌗</span>Scan</a>
+        <a href="#history" data-nav="history"><span>◷</span>History</a>
+        <a href="#settings" data-nav="settings"><span>⚙</span>Settings</a>
+      </nav>
+    </div>
+    <script src="config.js"></script>
+    <script src="app.js"></script>
+  </body>
+</html>
