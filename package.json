@@ -1,0 +1,8 @@
+{
+  "name": "scanly",
+  "private": true,
+  "description": "Scanly — barcode scanner front end",
+  "scripts": {
+    "dev": "npx --yes serve . -l 5173"
+  }
+}
