@@ -695,3 +695,12 @@ body.dark .detail-hero {
     border-radius: 20px 20px 0 0;
   }
 }
+
+.settings-list {
+  margin-top: 22px;
+}
+
+.scan-card-arrow {
+  margin-left: auto;
+  color: var(--muted);
+}
