@@ -11,12 +11,12 @@ export function home() {
       <h1>Know what’s behind every barcode.</h1>
 
       <p>
-        Scan products, Keep track, and keep useful details close at hand.
+        Scan products, Keep, and keep useful details close at hand.
       </p>
 
       <a class="scan-action" href="#scan">
         <span>⌗</span>
-        Scan a barcode
+        Scan a bjj
       </a>
     </section>
 

@@ -8,9 +8,15 @@
 // #item/5000112548167
 
 import { app } from './dom.js';
-import { home, scan, history as historyPage, settings, loadingItem } from './templates.js';
 import { stopCamera } from './camera.js';
 import { bindPageEvents } from './events.js';
+
+// Page templates
+import { home } from './pages/home.js';
+import { scan } from './pages/scan.js';
+import { history as historyPage } from './pages/history.js';
+import { settings } from './pages/settings.js';
+import { loadingItem } from './pages/item.js';
 
 
 /**
