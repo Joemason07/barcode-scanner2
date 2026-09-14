@@ -4,24 +4,24 @@ import { toast } from './dom.js';
 import { clearHistory } from './state.js';
 import { lookupProduct } from './api.js';
 import { startCamera } from './camera.js';
-import { render } from './router.js';
 
 
 /**
  * Sets up events that work across the entire application.
  */
 export function setupGlobalEvents() {
-  // Theme button.
-  document.querySelector('#theme-toggle')?.addEventListener('click', () => {
-    document.body.classList.toggle('dark');
-  });
+  setupThemeButton();
 }
 
 
 /**
  * Sets up events for the page that has just been rendered.
+ *
+ * @param {string} page - Current page name.
+ * @param {string} id - Product barcode, if on the item page.
+ * @param {Function} render - Function used to re-render the app.
  */
-export function bindPageEvents(page, id) {
+export function bindPageEvents(page, id, render) {
   setupToggles();
 
   switch (page) {
@@ -34,9 +34,21 @@ export function bindPageEvents(page, id) {
       break;
 
     case 'history':
-      setupHistoryPage();
+      setupHistoryPage(render);
       break;
   }
+}
+
+
+/**
+ * Theme button in the top bar.
+ */
+function setupThemeButton() {
+  const themeButton = document.querySelector('#theme-toggle');
+
+  themeButton?.addEventListener('click', () => {
+    document.body.classList.toggle('dark');
+  });
 }
 
 
@@ -44,9 +56,11 @@ export function bindPageEvents(page, id) {
  * Settings toggle switches.
  */
 function setupToggles() {
-  document.querySelectorAll('.toggle').forEach(button => {
-    button.addEventListener('click', () => {
-      button.classList.toggle('on');
+  const toggles = document.querySelectorAll('.toggle');
+
+  toggles.forEach(toggle => {
+    toggle.addEventListener('click', () => {
+      toggle.classList.toggle('on');
     });
   });
 }
@@ -58,8 +72,19 @@ function setupToggles() {
 function setupScanPage() {
   startCamera();
 
-  // Enter barcode manually.
-  document.querySelector('#manual')?.addEventListener('click', () => {
+  setupManualScan();
+
+  setupImageScan();
+}
+
+
+/**
+ * Manual barcode entry.
+ */
+function setupManualScan() {
+  const manualButton = document.querySelector('#manual');
+
+  manualButton?.addEventListener('click', () => {
     const code = prompt('Enter the barcode number');
 
     if (!code?.trim()) {
@@ -68,30 +93,42 @@ function setupScanPage() {
 
     location.hash = `item/${encodeURIComponent(code.trim())}`;
   });
+}
 
 
-  // Choose an image.
-  document.querySelector('#image')?.addEventListener('click', () => {
+/**
+ * Image barcode scanning.
+ */
+function setupImageScan() {
+  const imageButton = document.querySelector('#image');
+
+  imageButton?.addEventListener('click', () => {
     toast('Photo scanning can be connected here next.');
   });
 }
 
 
 /**
- * Product page events.
+ * Product detail page.
  */
 function setupItemPage(id) {
+  if (!id) {
+    return;
+  }
+
   lookupProduct(id);
 }
 
 
 /**
- * History page events.
+ * History page.
  */
-function setupHistoryPage() {
-  document.querySelector('#clear-history')?.addEventListener('click', () => {
+function setupHistoryPage(render) {
+  const clearButton = document.querySelector('#clear-history');
+
+  clearButton?.addEventListener('click', () => {
     clearHistory();
+
     render();
   });
 }
-

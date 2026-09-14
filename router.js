@@ -92,7 +92,7 @@ export function render() {
   app.focus();
 
   // Set up buttons and interactions for this page.
-  bindPageEvents(page, id);
+  bindPageEvents(page, id, render);
 }
 
 
