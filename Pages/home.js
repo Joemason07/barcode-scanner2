@@ -8,15 +8,15 @@ export function home() {
         Your everyday scanner
       </div>
 
-      <h1>Know what’s behind every barcode.</h1>
+      <h1>Upload your lastest shop.</h1>
 
       <p>
-        Scan products, Keep, and keep useful details close at hand.
+        Scan products, Keep stock, and keep useful details close at hand.
       </p>
 
       <a class="scan-action" href="#scan">
         <span>⌗</span>
-        Scan a bjj
+        Scan a barcode
       </a>
     </section>
 

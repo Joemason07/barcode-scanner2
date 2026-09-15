@@ -1,20 +1,26 @@
+
 // Handles navigation between pages using the URL hash.
 //
 // Examples:
 // #home
 // #scan
+// #inventory
 // #history
 // #settings
 // #item/5000112548167
+
 
 import { app } from './dom.js';
 import { stopCamera } from './camera.js';
 import { bindPageEvents } from './events.js';
 
+import { updateNavigation } from './components/navigation.js';
+
 // Page templates
 import { home } from './pages/home.js';
 import { scan } from './pages/scan.js';
 import { history as historyPage } from './pages/history.js';
+import { inventory } from './pages/inventory.js';
 import { settings } from './pages/settings.js';
 import { loadingItem } from './pages/item.js';
 
@@ -44,6 +50,9 @@ function getPageTemplate(page, id) {
     case 'scan':
       return scan();
 
+    case 'inventory':
+      return inventory();
+
     case 'history':
       return historyPage();
 
@@ -57,19 +66,6 @@ function getPageTemplate(page, id) {
     default:
       return home();
   }
-}
-
-
-/**
- * Highlights the correct item in the bottom navigation.
- */
-function updateNavigation(page) {
-  document.querySelectorAll('[data-nav]').forEach(link => {
-    link.classList.toggle(
-      'active',
-      link.dataset.nav === page
-    );
-  });
 }
 
 

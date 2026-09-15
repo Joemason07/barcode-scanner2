@@ -2,13 +2,21 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0"
+    />
     <meta name="theme-color" content="#123f3b" />
+
     <title>Scanly — Barcode scanner</title>
 
-    <!-- Google Fonts: Manrope for UI text, DM Mono for barcode-style numbers -->
+    <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      rel="preconnect"
+      href="https://fonts.gstatic.com"
+      crossorigin
+    />
     <link
       href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Manrope:wght@400;500;600;700;800&display=swap"
       rel="stylesheet"
@@ -16,40 +24,47 @@
 
     <link rel="stylesheet" href="styles.css" />
   </head>
+
   <body>
     <div class="app-shell">
-      <!-- App header: brand mark + light/dark theme toggle -->
+
+      <!-- App header -->
       <header class="topbar">
-        <a class="brand" href="#home" aria-label="Scanly home">
+        <a
+          class="brand"
+          href="#home"
+          aria-label="Scanly home"
+        >
           <span class="brand-mark">⌁</span>scanly
         </a>
-        <button class="icon-button" id="theme-toggle" aria-label="Toggle theme">☼</button>
+
+        <button
+          class="icon-button"
+          id="theme-toggle"
+          aria-label="Toggle theme"
+        >
+          ☼
+        </button>
       </header>
 
-      <!-- app.js renders the current page's markup into this element,
-           based on the URL hash (#home, #scan, #history, #settings, #item/<code>) -->
+
+      <!-- App pages are rendered here -->
       <main id="app" tabindex="-1"></main>
 
-      <!-- Bottom tab bar. data-nav values must match the route names used
-           in app.js's render() function so the active tab highlights correctly. -->
-      <nav class="bottom-nav" aria-label="Main navigation">
-        <a href="#home" data-nav="home"><span>⌂</span>Home</a>
-        <a href="#scan" data-nav="scan"><span>⌗</span>Scan</a>
-        <a href="#history" data-nav="history"><span>◷</span>History</a>
-        <a href="#settings" data-nav="settings"><span>⚙</span>Settings</a>
-      </nav>
+
+      <!-- Navigation is created by components/navigation.js -->
+      <div id="navigation"></div>
+
     </div>
 
-    <!-- config.js must load (and run) before app.js's modules do — it sets
-         window.SCANLY_CONFIG, which api.js reads. Regular scripts like this
-         one run immediately during parsing, before deferred module scripts,
-         so the order below is safe. -->
+
+    <!-- Configuration must load before app.js -->
     <script src="config.js"></script>
 
-    <!-- app.js is loaded as an ES module so it (and the files it imports:
-         dom.js, state.js, templates.js, camera.js, api.js) can use
-         import/export. Modules only work when served over http(s) — see
-         README.md for how to run a local dev server. -->
-    <script type="module" src="app.js"></script>
+    <!-- Main application -->
+    <script
+      type="module"
+      src="app.js"
+    ></script>
   </body>
 </html>
