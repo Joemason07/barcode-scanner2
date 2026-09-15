@@ -1,7 +1,19 @@
+// Product detail pages.
+//
+// Displays loading, successful, missing,
+// and error states for a product lookup.
+
 import { escapeHtml } from '../utils.js';
 import { trafficLights } from '../components/traffic-lights.js';
 
 
+// --------------------------------------------------
+// Loading state
+// --------------------------------------------------
+
+/**
+ * Displays while a product is being looked up.
+ */
 export function loadingItem(code) {
   return `
     <a class="link" href="#history">
@@ -23,13 +35,43 @@ export function loadingItem(code) {
 }
 
 
+// --------------------------------------------------
+// Product details
+// --------------------------------------------------
+
+/**
+ * Displays a successfully found product.
+ */
 export function productItem(product) {
   return `
     <a class="link" href="#history">
       ← Back to history
     </a>
 
+    ${productHero(product)}
 
+    ${productHeader(product)}
+
+    ${productSummary(product)}
+
+    ${trafficLights(product.traffic)}
+
+    ${productInformation(product)}
+
+    ${productDataNote()}
+  `;
+}
+
+
+// --------------------------------------------------
+// Product hero
+// --------------------------------------------------
+
+/**
+ * Creates the product image area.
+ */
+function productHero(product) {
+  return `
     <div class="detail-hero">
       ${
         product.image
@@ -39,11 +81,24 @@ export function productItem(product) {
               alt="${escapeHtml(product.name)}"
             />
           `
-          : '⌗'
+          : `
+            <span aria-hidden="true">⌗</span>
+          `
       }
     </div>
+  `;
+}
 
 
+// --------------------------------------------------
+// Product header
+// --------------------------------------------------
+
+/**
+ * Creates the product name and brand.
+ */
+function productHeader(product) {
+  return `
     <section class="page-intro">
 
       <div class="eyebrow">
@@ -55,39 +110,65 @@ export function productItem(product) {
       </h1>
 
       <p>
-        ${escapeHtml(product.brand || 'Brand not listed')}
+        ${escapeHtml(
+          product.brand || 'Brand not listed'
+        )}
       </p>
 
     </section>
 
-
     <div class="detail-code">
       ${escapeHtml(product.code)}
     </div>
+  `;
+}
 
 
+// --------------------------------------------------
+// Product summary
+// --------------------------------------------------
+
+/**
+ * Creates the price and Nutri-Score cards.
+ */
+function productSummary(product) {
+  return `
     <div class="product-grid">
 
       <div>
         <span>Price</span>
+
         <b>
-          ${escapeHtml(product.price || 'Not available')}
+          ${escapeHtml(
+            product.price || 'Not available'
+          )}
         </b>
       </div>
 
       <div>
         <span>Nutri-Score</span>
+
         <b class="grade">
-          ${escapeHtml(product.grade || '—')}
+          ${escapeHtml(
+            product.grade || '—'
+          )}
         </b>
       </div>
 
     </div>
+  `;
+}
 
 
-    ${trafficLights(product.traffic)}
+// --------------------------------------------------
+// Product information
+// --------------------------------------------------
 
-
+/**
+ * Creates the main product information section.
+ */
+function productInformation(product) {
+  return `
     <div class="section-head">
       <h2>About this product</h2>
     </div>
@@ -99,40 +180,78 @@ export function productItem(product) {
       )}
     </p>
 
-
     <div class="info-list">
 
       <div>
         <span>Product type</span>
+
         <b>
-          ${escapeHtml(product.type || 'Product')}
+          ${escapeHtml(
+            product.type || 'Product'
+          )}
         </b>
       </div>
 
       <div>
         <span>Categories</span>
+
         <b>
-          ${escapeHtml(product.categories || 'Not listed')}
+          ${escapeHtml(
+            product.categories || 'Not listed'
+          )}
         </b>
       </div>
 
       <div>
         <span>Ingredients</span>
+
         <b>
-          ${escapeHtml(product.ingredients || 'Not listed')}
+          ${escapeHtml(
+            product.ingredients || 'Not listed'
+          )}
         </b>
       </div>
 
       <div>
         <span>Nutrition</span>
+
         <b>
-          ${escapeHtml(product.nutrition || 'Not available')}
+          ${formatNutrition(product)}
         </b>
       </div>
 
     </div>
+  `;
+}
 
 
+// --------------------------------------------------
+// Nutrition
+// --------------------------------------------------
+
+/**
+ * Formats the nutrition information for display.
+ */
+function formatNutrition(product) {
+  const energy = product.nutrition?.energy_kcal;
+
+  if (energy == null) {
+    return 'Not available';
+  }
+
+  return `${escapeHtml(energy)} kcal per 100g`;
+}
+
+
+// --------------------------------------------------
+// Data note
+// --------------------------------------------------
+
+/**
+ * Displays information about the product data source.
+ */
+function productDataNote() {
+  return `
     <p class="data-note">
       The lookup searches Open Food Facts, Open Beauty Facts,
       Open Pet Food Facts, and Open Products Facts.
@@ -143,6 +262,13 @@ export function productItem(product) {
 }
 
 
+// --------------------------------------------------
+// Missing product
+// --------------------------------------------------
+
+/**
+ * Displays when a barcode isn't found.
+ */
 export function missingItem(code) {
   return `
     <a class="link" href="#history">
@@ -170,6 +296,13 @@ export function missingItem(code) {
 }
 
 
+// --------------------------------------------------
+// Lookup error
+// --------------------------------------------------
+
+/**
+ * Displays when the API request fails.
+ */
 export function errorItem() {
   return `
     <a class="link" href="#history">

@@ -1,11 +1,29 @@
+// Reusable scan card.
+//
+// Displays a scanned product in lists such as
+// the Home page and History page.
+
 import { escapeHtml } from '../utils.js';
 
 
+// --------------------------------------------------
+// Scan card
+// --------------------------------------------------
+
 export function scanCard(item) {
+  const name =
+    item.name || 'Unnamed product';
+
+  const code =
+    item.code || '';
+
+  const time =
+    item.time || '';
+
   return `
     <a
       class="scan-card"
-      href="#item/${encodeURIComponent(item.code)}"
+      href="#item/${encodeURIComponent(code)}"
     >
 
       <div class="code">
@@ -16,9 +34,14 @@ export function scanCard(item) {
               <img
                 src="${escapeHtml(item.image)}"
                 alt=""
+                loading="lazy"
               />
             `
-            : item.icon
+            : `
+              <span aria-hidden="true">
+                ⌗
+              </span>
+            `
         }
 
       </div>
@@ -27,19 +50,25 @@ export function scanCard(item) {
       <div>
 
         <b>
-          ${escapeHtml(item.name)}
+          ${escapeHtml(name)}
         </b>
 
         <small>
-          ${escapeHtml(item.code)}
-          ·
-          ${escapeHtml(item.time)}
+          ${escapeHtml(code)}
+          ${
+            time
+              ? ` · ${escapeHtml(time)}`
+              : ''
+          }
         </small>
 
       </div>
 
 
-      <span class="scan-card-arrow">
+      <span
+        class="scan-card-arrow"
+        aria-hidden="true"
+      >
         ›
       </span>
 

@@ -1,10 +1,19 @@
-// Handles user interactions and buttons throughout the app.
+// Application events.
+//
+// This file connects user interactions to the
+// appropriate application modules.
+//
+// It does not contain page HTML or product mapping.
 
 import { toast } from './dom.js';
 import { clearHistory } from './state.js';
 import { lookupProduct } from './api.js';
 import { startCamera } from './camera.js';
 
+
+// --------------------------------------------------
+// Global events
+// --------------------------------------------------
 
 /**
  * Sets up events that work across the entire application.
@@ -14,6 +23,10 @@ export function setupGlobalEvents() {
 }
 
 
+// --------------------------------------------------
+// Page events
+// --------------------------------------------------
+
 /**
  * Sets up events for the page that has just been rendered.
  *
@@ -21,7 +34,11 @@ export function setupGlobalEvents() {
  * @param {string} id - Product barcode, if on the item page.
  * @param {Function} render - Function used to re-render the app.
  */
-export function bindPageEvents(page, id, render) {
+export function bindPageEvents(
+  page,
+  id,
+  render
+) {
   setupToggles();
 
   switch (page) {
@@ -40,77 +57,113 @@ export function bindPageEvents(page, id, render) {
 }
 
 
+// --------------------------------------------------
+// Theme
+// --------------------------------------------------
+
 /**
- * Theme button in the top bar.
+ * Sets up the theme toggle in the top bar.
  */
 function setupThemeButton() {
-  const themeButton = document.querySelector('#theme-toggle');
+  const themeButton =
+    document.querySelector('#theme-toggle');
 
-  themeButton?.addEventListener('click', () => {
-    document.body.classList.toggle('dark');
-  });
+  themeButton?.addEventListener(
+    'click',
+    () => {
+      document.body.classList.toggle('dark');
+    }
+  );
 }
 
 
+// --------------------------------------------------
+// Settings
+// --------------------------------------------------
+
 /**
- * Settings toggle switches.
+ * Sets up settings toggle switches.
  */
 function setupToggles() {
-  const toggles = document.querySelectorAll('.toggle');
+  const toggles =
+    document.querySelectorAll('.toggle');
 
   toggles.forEach(toggle => {
-    toggle.addEventListener('click', () => {
-      toggle.classList.toggle('on');
-    });
+    toggle.addEventListener(
+      'click',
+      () => {
+        toggle.classList.toggle('on');
+      }
+    );
   });
 }
 
 
+// --------------------------------------------------
+// Scan page
+// --------------------------------------------------
+
 /**
- * Scan page events.
+ * Sets up all Scan page interactions.
  */
 function setupScanPage() {
   startCamera();
 
   setupManualScan();
-
   setupImageScan();
 }
 
 
-/**
- * Manual barcode entry.
- */
+// --------------------------------------------------
+// Manual barcode entry
+// --------------------------------------------------
+
 function setupManualScan() {
-  const manualButton = document.querySelector('#manual');
+  const manualButton =
+    document.querySelector('#manual');
 
-  manualButton?.addEventListener('click', () => {
-    const code = prompt('Enter the barcode number');
+  manualButton?.addEventListener(
+    'click',
+    () => {
+      const input =
+        prompt('Enter the barcode number');
 
-    if (!code?.trim()) {
-      return;
+      const code = input?.trim();
+
+      if (!code) {
+        return;
+      }
+
+      location.hash =
+        `item/${encodeURIComponent(code)}`;
     }
-
-    location.hash = `item/${encodeURIComponent(code.trim())}`;
-  });
+  );
 }
 
 
-/**
- * Image barcode scanning.
- */
+// --------------------------------------------------
+// Image scanning
+// --------------------------------------------------
+
 function setupImageScan() {
-  const imageButton = document.querySelector('#image');
+  const imageButton =
+    document.querySelector('#image');
 
-  imageButton?.addEventListener('click', () => {
-    toast('Photo scanning can be connected here next.');
-  });
+  imageButton?.addEventListener(
+    'click',
+    () => {
+      toast(
+        'Photo scanning can be connected here next.'
+      );
+    }
+  );
 }
 
 
-/**
- * Product detail page.
- */
+// --------------------------------------------------
+// Product page
+// --------------------------------------------------
+
 function setupItemPage(id) {
   if (!id) {
     return;
@@ -120,15 +173,20 @@ function setupItemPage(id) {
 }
 
 
-/**
- * History page.
- */
+// --------------------------------------------------
+// History page
+// --------------------------------------------------
+
 function setupHistoryPage(render) {
-  const clearButton = document.querySelector('#clear-history');
+  const clearButton =
+    document.querySelector('#clear-history');
 
-  clearButton?.addEventListener('click', () => {
-    clearHistory();
+  clearButton?.addEventListener(
+    'click',
+    () => {
+      clearHistory();
 
-    render();
-  });
+      render();
+    }
+  );
 }

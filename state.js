@@ -1,125 +1,107 @@
-// Inventory page.
+// Application state.
 //
-// Displays all products that have been scanned
-// and saved to the local scan history.
+// Scan history is stored in localStorage so it survives
+// page reloads.
+//
+// Products stored here use the standard Scanly product
+// structure created by data/product.js.
 
-import { scans } from '../state.js';
+const STORAGE_KEY = 'scanly-history';
 
 
-/**
- * Creates the inventory page.
- */
-export function inventory() {
-  if (scans.length === 0) {
-    return `
-      <section class="page inventory-page">
-        <div class="page-header">
-          <p class="eyebrow">Inventory</p>
-          <h1>Your inventory</h1>
-          <p>
-            Products you have scanned will appear here.
-          </p>
-        </div>
+// --------------------------------------------------
+// Load history
+// --------------------------------------------------
 
-        <div class="empty-state">
-          <div class="empty-state-icon">⌂</div>
-
-          <h2>Your inventory is empty</h2>
-
-          <p>
-            Scan a barcode to add a product to your inventory.
-          </p>
-
-          <a class="button" href="#scan">
-            Scan a barcode
-          </a>
-        </div>
-      </section>
-    `;
+function loadHistory() {
+  try {
+    return JSON.parse(
+      localStorage.getItem(STORAGE_KEY) || '[]'
+    );
+  } catch {
+    return [];
   }
+}
 
-  return `
-    <section class="page inventory-page">
-      <div class="page-header">
-        <p class="eyebrow">Inventory</p>
+export let scans = loadHistory();
 
-        <h1>Your inventory</h1>
 
-        <p>
-          ${scans.length}
-          ${scans.length === 1 ? 'product' : 'products'}
-          scanned.
-        </p>
-      </div>
+// --------------------------------------------------
+// Save history
+// --------------------------------------------------
 
-      <div class="inventory-list">
-        ${scans.map(inventoryItem).join('')}
-      </div>
-    </section>
-  `;
+function saveHistory() {
+  localStorage.setItem(
+    STORAGE_KEY,
+    JSON.stringify(scans)
+  );
 }
 
 
+// --------------------------------------------------
+// Add scan
+// --------------------------------------------------
+
 /**
- * Creates a single inventory item.
+ * Adds a product to scan history.
+ *
+ * The most recently scanned product appears first.
+ * A barcode only appears once in the history.
  */
-function inventoryItem(item) {
-  const name =
-    item.product_name ||
-    item.generic_name ||
-    'Unnamed product';
+export function addToHistory(product) {
+  const now = new Date();
 
-  const brand = item.brands || '';
-  const code = item.code || '';
+  const scannedProduct = {
+    ...product,
 
-  return `
-    <a
-      class="inventory-item"
-      href="#item/${encodeURIComponent(code)}"
-    >
-      ${
-        item.image_front_url
-          ? `
-            <img
-              class="inventory-item-image"
-              src="${escapeHtml(item.image_front_url)}"
-              alt=""
-              loading="lazy"
-            />
-          `
-          : `
-            <div class="inventory-item-image inventory-item-placeholder">
-              <span>⌁</span>
-            </div>
-          `
-      }
+    scannedAt: now.toISOString(),
 
-      <div class="inventory-item-content">
-        <h2>${escapeHtml(name)}</h2>
+    time: `Today, ${now.toLocaleTimeString([], {
+      hour: '2-digit',
+      minute: '2-digit'
+    })}`
+  };
 
-        ${
-          brand
-            ? `<p>${escapeHtml(brand)}</p>`
-            : ''
-        }
+  scans = [
+    scannedProduct,
+    ...scans.filter(
+      scan => scan.code !== product.code
+    )
+  ];
 
-        <span class="inventory-item-code">
-          ${escapeHtml(code)}
-        </span>
-      </div>
-    </a>
-  `;
+  saveHistory();
 }
 
 
+// --------------------------------------------------
+// Clear history
+// --------------------------------------------------
+
+export function clearHistory() {
+  scans = [];
+
+  saveHistory();
+}
+
+
+// --------------------------------------------------
+// Statistics
+// --------------------------------------------------
+
 /**
- * Escapes text before adding it to HTML.
+ * Counts scans from the last 7 days.
  */
-function escapeHtml(value = '') {
-  return String(value)
-    .replace(/&/g, '&amp;')
-    .replace(/</g, '&lt;')
-    .replace(/>/g, '&gt;')
-    .replace(/"/g, '&quot;')
-    .replace(/'/g, '&#039;');
+export function scansThisWeek() {
+  const weekAgo =
+    Date.now() -
+    7 * 24 * 60 * 60 * 1000;
+
+  return scans.filter(scan => {
+    const scannedAt =
+      new Date(
+        scan.scannedAt || 0
+      ).getTime();
+
+    return scannedAt >= weekAgo;
+  }).length;
 }

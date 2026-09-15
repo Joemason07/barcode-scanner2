@@ -1,13 +1,39 @@
-// Shared DOM references and small UI helpers used across modules.
+// Shared DOM references and small UI helpers.
+//
+// This file contains DOM elements and UI utilities
+// that are used by multiple parts of the application.
 
-export const app = document.querySelector('#app');
 
-// Shows a small floating message near the bottom nav for a couple of seconds.
+// --------------------------------------------------
+// Main application container
+// --------------------------------------------------
+
+export const app =
+  document.querySelector('#app');
+
+
+// --------------------------------------------------
+// Toast messages
+// --------------------------------------------------
+
+/**
+ * Shows a temporary message at the bottom of the screen.
+ *
+ * @param {string} message - Message to display.
+ */
 export function toast(message) {
+  // Remove any existing toast.
   document.querySelector('.toast')?.remove();
-  const el = document.createElement('div');
-  el.className = 'toast';
-  el.textContent = message;
-  document.body.append(el);
-  setTimeout(() => el.remove(), 2800);
+
+  const element =
+    document.createElement('div');
+
+  element.className = 'toast';
+  element.textContent = message;
+
+  document.body.append(element);
+
+  setTimeout(() => {
+    element.remove();
+  }, 2800);
 }

@@ -2,69 +2,103 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
+
     <meta
       name="viewport"
       content="width=device-width, initial-scale=1.0"
     />
-    <meta name="theme-color" content="#123f3b" />
+
+    <meta
+      name="theme-color"
+      content="#123f3b"
+    />
 
     <title>Scanly — Barcode scanner</title>
 
-    <!-- Google Fonts -->
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
+
+    <!-- Fonts -->
+
+    <link
+      rel="preconnect"
+      href="https://fonts.googleapis.com"
+    />
+
     <link
       rel="preconnect"
       href="https://fonts.gstatic.com"
       crossorigin
     />
+
     <link
       href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Manrope:wght@400;500;600;700;800&display=swap"
       rel="stylesheet"
     />
 
-    <link rel="stylesheet" href="styles.css" />
+
+    <!-- Styles -->
+
+    <link
+      rel="stylesheet"
+      href="styles.css"
+    />
   </head>
 
+
   <body>
+
     <div class="app-shell">
 
-      <!-- App header -->
+      <!-- Application header -->
+
       <header class="topbar">
+
         <a
           class="brand"
           href="#home"
           aria-label="Scanly home"
         >
-          <span class="brand-mark">⌁</span>scanly
+          <span class="brand-mark">⌁</span>
+          scanly
         </a>
 
         <button
           class="icon-button"
           id="theme-toggle"
+          type="button"
           aria-label="Toggle theme"
         >
           ☼
         </button>
+
       </header>
 
 
-      <!-- App pages are rendered here -->
-      <main id="app" tabindex="-1"></main>
+      <!-- Pages are rendered here -->
+
+      <main
+        id="app"
+        tabindex="-1"
+      ></main>
 
 
-      <!-- Navigation is created by components/navigation.js -->
+      <!-- Bottom navigation -->
+
       <div id="navigation"></div>
 
     </div>
 
 
-    <!-- Configuration must load before app.js -->
+    <!-- Configuration -->
+
     <script src="config.js"></script>
 
-    <!-- Main application -->
+
+    <!-- Application entry point -->
+
     <script
       type="module"
       src="app.js"
     ></script>
+
   </body>
 </html>
