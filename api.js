@@ -2,24 +2,37 @@
 //
 // Scanly runs on localhost:8000.
 // The local database API runs on localhost:8001.
-// The API then looks up the barcode in PostgreSQL.
+// The API looks up the barcode in PostgreSQL.
 
 import { app } from './dom.js';
 import { addToHistory } from './state.js';
-import { productItem, missingItem, errorItem } from './templates.js';
+
+import {
+  productItem,
+  missingItem,
+  errorItem
+} from './pages/item.js';
+
 
 const lookupEndpoint =
   window.SCANLY_CONFIG?.lookupEndpoint?.trim()
   || 'http://localhost:8001/api/product';
 
 
+/**
+ * Looks up a barcode using the Scanly API.
+ */
 export async function lookupProduct(code) {
-  if (!code) return;
+  if (!code) {
+    return;
+  }
+
 
   try {
     const url = `${lookupEndpoint}/${encodeURIComponent(code)}`;
 
     const response = await fetch(url);
+
 
     // Product was not found.
     if (response.status === 404) {
@@ -32,21 +45,26 @@ export async function lookupProduct(code) {
       return;
     }
 
+
     // API returned another error.
     if (!response.ok) {
       throw new Error('Catalogue request failed');
     }
 
+
     // Our local API returns the product directly.
     const p = await response.json();
 
+
     // Prefer kcal when available.
-    const nutrition = p.energy_kcal_100g != null
-      ? `${p.energy_kcal_100g} kcal per 100g`
-      : '';
+    const nutrition =
+      p.energy_kcal_100g != null
+        ? `${p.energy_kcal_100g} kcal per 100g`
+        : '';
+
 
     // Convert the database product into the format
-    // the existing Scanly templates expect.
+    // the Scanly templates expect.
     const product = {
       code: p.barcode || code,
 
@@ -75,12 +93,14 @@ export async function lookupProduct(code) {
         fat: p.fat_100g,
         saturates: p.saturated_fat_100g,
         sugars: p.sugars_100g,
-        salt: p.salt_100g,
-      },
+        salt: p.salt_100g
+      }
     };
+
 
     // Save the product to Scanly history.
     addToHistory(product);
+
 
     // Display the product.
     app.innerHTML = productItem(product);
