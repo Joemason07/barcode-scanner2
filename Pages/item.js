@@ -71,6 +71,8 @@ export function productItem(product) {
 
     ${productInformation(product)}
 
+    ${ingredientsSection(product.ingredients)}
+
     ${productDataNote()}
   `;
 }
@@ -165,6 +167,7 @@ function productSummary(product) {
             product.grade || '—'
           )}
         </b>
+
       </div>
 
     </div>
@@ -266,20 +269,6 @@ function productInformation(product) {
       <div>
 
         <span>
-          Ingredients
-        </span>
-
-        <b>
-          ${escapeHtml(
-            product.ingredients || 'Not listed'
-          )}
-        </b>
-
-      </div>
-
-      <div>
-
-        <span>
           Nutrition
         </span>
 
@@ -290,6 +279,47 @@ function productInformation(product) {
       </div>
 
     </div>
+  `;
+}
+
+
+// ==================================================
+// Ingredients
+// ==================================================
+
+function ingredientsSection(ingredients) {
+  if (!ingredients) {
+    return '';
+  }
+
+  const items =
+    ingredients
+      .split(',')
+      .map(item => item.trim())
+      .filter(Boolean);
+
+  if (items.length === 0) {
+    return '';
+  }
+
+  return `
+    <section class="product-section">
+
+      <h2>
+        Ingredients
+      </h2>
+
+      <ul class="ingredients-list">
+
+        ${items.map(ingredient => `
+          <li class="ingredients-item">
+            ${escapeHtml(ingredient)}
+          </li>
+        `).join('')}
+
+      </ul>
+
+    </section>
   `;
 }
 

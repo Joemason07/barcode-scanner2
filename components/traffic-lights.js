@@ -1,219 +1,118 @@
-/* ==========================================================================
-   Scanly — Nutrition Traffic Lights
-   ========================================================================== */
+// Nutrition traffic lights.
+//
+// Converts per-100g nutrition values into UK-style
+// green, amber, or red traffic-light indicators.
 
 
-/* ==========================================================================
-   1. Traffic light section
-   ========================================================================== */
+// --------------------------------------------------
+// Individual traffic light
+// --------------------------------------------------
 
-   .traffic-section {
-    margin-top: 18px;
-  
-    padding: 20px;
-  
-    border: 1px solid var(--line);
-    border-radius: var(--radius-lg);
-  
-    background: var(--paper);
-  
-    box-shadow: var(--shadow);
-  }
-  
-  
-  /* ==========================================================================
-     2. Section heading
-     ========================================================================== */
-  
-  .traffic-section .section-head {
-    margin: 0 0 14px;
-  }
-  
-  .traffic-section .section-head h2 {
-    margin: 0;
-  
-    color: var(--brand);
-  
-    font-size: 18px;
-  }
-  
-  .per-100 {
-    color: var(--muted);
-  
-    font-size: 11px;
-    font-weight: 700;
-  }
-  
-  
-  /* ==========================================================================
-     3. Traffic light grid
-     ========================================================================== */
-  
-  .traffic-lights {
-    display: grid;
-  
-    grid-template-columns:
-      repeat(4, 1fr);
-  
-    gap: 8px;
-  }
-  
-  
-  /* ==========================================================================
-     4. Individual traffic light
-     ========================================================================== */
-  
-  .traffic-light {
-    min-width: 0;
-  
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-  
-    padding: 14px 8px;
-  
-    border-radius: var(--radius-md);
-  
-    text-align: center;
-  
-    transition:
-      transform 0.15s ease;
-  }
-  
-  .traffic-light:hover {
-    transform: translateY(-2px);
-  }
-  
-  
-  /* ==========================================================================
-     5. Traffic dot
-     ========================================================================== */
-  
-  .traffic-dot {
-    width: 14px;
-    height: 14px;
-  
-    display: block;
-  
-    margin-bottom: 8px;
-  
-    border-radius: 50%;
-  }
-  
-  
-  /* ==========================================================================
-     6. Nutrient name
-     ========================================================================== */
-  
-  .traffic-light b {
-    margin-bottom: 5px;
-  
-    color: var(--ink);
-  
-    font-size: 11px;
-    font-weight: 800;
-  }
-  
-  
-  /* ==========================================================================
-     7. Nutrient value
-     ========================================================================== */
-  
-  .traffic-light strong {
-    color: var(--ink);
-  
-    font-family:
-      'DM Mono',
-      monospace;
-  
-    font-size: 16px;
-    line-height: 1.2;
-  }
-  
-  
-  /* ==========================================================================
-     8. Per 100g label
-     ========================================================================== */
-  
-  .traffic-light small {
-    margin-top: 3px;
-  
-    color: var(--muted);
-  
-    font-size: 9px;
-    font-weight: 600;
-  }
-  
-  
-  /* ==========================================================================
-     9. Green
-     ========================================================================== */
-  
-  .traffic-light.green {
-    background: #e4f2d0;
-  }
-  
-  .traffic-light.green .traffic-dot {
-    background: #6a9d3d;
-  }
-  
-  
-  /* ==========================================================================
-     10. Amber
-     ========================================================================== */
-  
-  .traffic-light.amber {
-    background: #f5edc8;
-  }
-  
-  .traffic-light.amber .traffic-dot {
-    background: #c29b27;
-  }
-  
-  
-  /* ==========================================================================
-     11. Red
-     ========================================================================== */
-  
-  .traffic-light.red {
-    background: #f5d8c9;
-  }
-  
-  .traffic-light.red .traffic-dot {
-    background: #c45a45;
-  }
-  
-  
-  /* ==========================================================================
-     12. Unknown
-     ========================================================================== */
-  
-  .traffic-light.unknown {
-    background: var(--canvas);
-  }
-  
-  .traffic-light.unknown .traffic-dot {
-    background: var(--muted);
-  }
-  
-  
-  /* ==========================================================================
-     13. Mobile
-     ========================================================================== */
-  
-  @media (max-width: 480px) {
-    .traffic-section {
-      padding: 16px;
-    }
-  
-    .traffic-lights {
-      grid-template-columns:
-        repeat(2, 1fr);
-  
-      gap: 8px;
-    }
-  
-    .traffic-light {
-      padding: 12px 8px;
-    }
-  }
+function trafficLight(
+  name,
+  value,
+  low,
+  medium
+) {
+  const amount = Number(value);
+
+  const level =
+    !Number.isFinite(amount)
+      ? 'unknown'
+      : amount <= low
+        ? 'green'
+        : amount <= medium
+          ? 'amber'
+          : 'red';
+
+  const display =
+    Number.isFinite(amount)
+      ? `${amount
+          .toFixed(amount < 1 ? 2 : 1)
+          .replace(/\.0$/, '')}g`
+      : '—';
+
+  return `
+    <div
+      class="traffic-light ${level}"
+      aria-label="${name}: ${display} per 100 grams, ${level}"
+    >
+
+      <span
+        class="traffic-dot"
+        aria-hidden="true"
+      ></span>
+
+      <b>
+        ${name}
+      </b>
+
+      <strong>
+        ${display}
+      </strong>
+
+      <small>
+        per 100g
+      </small>
+
+    </div>
+  `;
+}
+
+
+// --------------------------------------------------
+// Traffic lights
+// --------------------------------------------------
+
+export function trafficLights(values = {}) {
+  return `
+    <section class="traffic-section">
+
+      <div class="section-head">
+
+        <h2>
+          Traffic lights
+        </h2>
+
+        <span class="per-100">
+          Per 100g
+        </span>
+
+      </div>
+
+
+      <div class="traffic-lights">
+
+        ${trafficLight(
+          'Fat',
+          values.fat,
+          3,
+          17.5
+        )}
+
+        ${trafficLight(
+          'Saturates',
+          values.saturates,
+          1.5,
+          5
+        )}
+
+        ${trafficLight(
+          'Sugars',
+          values.sugars,
+          5,
+          22.5
+        )}
+
+        ${trafficLight(
+          'Salt',
+          values.salt,
+          0.3,
+          1.5
+        )}
+
+      </div>
+
+    </section>
+  `;
+}
