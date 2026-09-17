@@ -1205,3 +1205,332 @@
       transform: translateX(-50%);
     }
   }
+
+  /* ========================================
+   Inventory
+   ======================================== */
+
+.inventory-page {
+  padding-bottom: 110px;
+}
+
+.inventory-list {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+
+/* ----------------------------------------
+   Card
+   ---------------------------------------- */
+
+.inventory-card {
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+
+  background: var(--paper);
+  border: 1px solid rgba(22, 73, 67, 0.08);
+  border-radius: 22px;
+
+  box-shadow:
+    0 2px 6px rgba(0, 0, 0, 0.03),
+    0 10px 30px rgba(22, 73, 67, 0.05);
+
+  transition:
+    transform 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+.inventory-card:hover {
+  transform: translateY(-2px);
+
+  box-shadow:
+    0 4px 10px rgba(0, 0, 0, 0.04),
+    0 14px 35px rgba(22, 73, 67, 0.08);
+}
+
+
+/* ----------------------------------------
+   Product link
+   ---------------------------------------- */
+
+.inventory-card-link {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+
+  padding: 16px;
+
+  color: inherit;
+  text-decoration: none;
+}
+
+
+/* ----------------------------------------
+   Product image
+   ---------------------------------------- */
+
+.inventory-card-image {
+  flex: 0 0 82px;
+
+  width: 82px;
+  height: 82px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  overflow: hidden;
+
+  background: var(--canvas);
+  border-radius: 16px;
+}
+
+.inventory-card-image img {
+  width: 100%;
+  height: 100%;
+
+  object-fit: contain;
+
+  padding: 8px;
+
+  transition: transform 0.25s ease;
+}
+
+.inventory-card:hover .inventory-card-image img {
+  transform: scale(1.05);
+}
+
+.inventory-card-placeholder {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  width: 100%;
+  height: 100%;
+
+  font-size: 28px;
+  color: var(--brand);
+}
+
+
+/* ----------------------------------------
+   Product information
+   ---------------------------------------- */
+
+.inventory-card-content {
+  min-width: 0;
+  flex: 1;
+}
+
+.inventory-card-brand {
+  margin: 0 0 3px;
+
+  font-size: 12px;
+  font-weight: 600;
+
+  color: var(--brand);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+
+.inventory-card-name {
+  margin: 0;
+
+  display: -webkit-box;
+  overflow: hidden;
+
+  font-size: 16px;
+  line-height: 1.3;
+  font-weight: 700;
+
+  color: var(--brand);
+
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+}
+
+.inventory-card-code {
+  display: block;
+
+  margin-top: 6px;
+
+  overflow: hidden;
+
+  font-family: 'DM Mono', monospace;
+  font-size: 11px;
+
+  color: #888;
+
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+
+/* ----------------------------------------
+   Footer
+   ---------------------------------------- */
+
+.inventory-card-footer {
+  display: flex;
+  align-items: center;
+
+  min-height: 58px;
+
+  padding: 10px 14px;
+
+  border-top: 1px solid rgba(22, 73, 67, 0.07);
+
+  background: rgba(245, 245, 240, 0.55);
+}
+
+.inventory-card-quantity-label {
+  margin-right: auto;
+
+  font-size: 13px;
+  font-weight: 600;
+
+  color: #777;
+}
+
+
+/* ----------------------------------------
+   Quantity controls
+   ---------------------------------------- */
+
+.inventory-card-controls {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+
+  padding: 3px;
+
+  background: var(--paper);
+  border: 1px solid rgba(22, 73, 67, 0.1);
+  border-radius: 14px;
+}
+
+.inventory-card-button {
+  width: 32px;
+  height: 32px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  padding: 0;
+
+  border: 0;
+  border-radius: 10px;
+
+  background: transparent;
+
+  color: var(--brand);
+
+  font-size: 20px;
+  font-weight: 500;
+
+  cursor: pointer;
+
+  transition:
+    background 0.15s ease,
+    transform 0.15s ease;
+}
+
+.inventory-card-button:hover {
+  background: var(--canvas);
+}
+
+.inventory-card-button:active {
+  transform: scale(0.9);
+}
+
+.inventory-card-quantity {
+  min-width: 28px;
+
+  text-align: center;
+
+  font-family: 'DM Mono', monospace;
+  font-size: 14px;
+  font-weight: 700;
+
+  color: var(--brand);
+}
+
+
+/* ----------------------------------------
+   Remove button
+   ---------------------------------------- */
+
+.inventory-card-remove {
+  width: 34px;
+  height: 34px;
+
+  margin-left: 8px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  padding: 0;
+
+  border: 0;
+  border-radius: 50%;
+
+  background: transparent;
+
+  color: #999;
+
+  font-size: 20px;
+  font-weight: 400;
+
+  cursor: pointer;
+
+  transition:
+    background 0.15s ease,
+    color 0.15s ease;
+}
+
+.inventory-card-remove:hover {
+  background: #f3e8e6;
+  color: #a34b42;
+}
+
+
+/* ----------------------------------------
+   Mobile
+   ---------------------------------------- */
+
+@media (max-width: 480px) {
+
+  .inventory-card {
+    border-radius: 18px;
+  }
+
+  .inventory-card-link {
+    gap: 12px;
+    padding: 12px;
+  }
+
+  .inventory-card-image {
+    flex-basis: 68px;
+    width: 68px;
+    height: 68px;
+    border-radius: 14px;
+  }
+
+  .inventory-card-name {
+    font-size: 15px;
+  }
+
+  .inventory-card-footer {
+    min-height: 54px;
+    padding: 8px 10px;
+  }
+
+  .inventory-card-quantity-label {
+    font-size: 12px;
+  }
+}

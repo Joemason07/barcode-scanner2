@@ -2,21 +2,29 @@
 //
 // Displays loading, successful, missing,
 // and error states for a product lookup.
+//
+// Products can also be added to or removed
+// from the user's inventory from this page.
 
 import { escapeHtml } from '../utils.js';
+
+import {
+  isInInventory
+} from '../state.js';
+
 import { trafficLights } from '../components/traffic-lights.js';
 
 
-// --------------------------------------------------
+// ==================================================
 // Loading state
-// --------------------------------------------------
+// ==================================================
 
-/**
- * Displays while a product is being looked up.
- */
 export function loadingItem(code) {
   return `
-    <a class="link" href="#history">
+    <a
+      class="link"
+      href="#history"
+    >
       ← Back to history
     </a>
 
@@ -24,10 +32,13 @@ export function loadingItem(code) {
 
       <div class="loader"></div>
 
-      <h2>Looking up product</h2>
+      <h2>
+        Looking up product
+      </h2>
 
       <p>
-        Finding details for ${escapeHtml(code)}…
+        Finding details for
+        ${escapeHtml(code)}…
       </p>
 
     </div>
@@ -35,16 +46,16 @@ export function loadingItem(code) {
 }
 
 
-// --------------------------------------------------
+// ==================================================
 // Product details
-// --------------------------------------------------
+// ==================================================
 
-/**
- * Displays a successfully found product.
- */
 export function productItem(product) {
   return `
-    <a class="link" href="#history">
+    <a
+      class="link"
+      href="#history"
+    >
       ← Back to history
     </a>
 
@@ -53,6 +64,8 @@ export function productItem(product) {
     ${productHeader(product)}
 
     ${productSummary(product)}
+
+    ${inventoryButton(product)}
 
     ${trafficLights(product.traffic)}
 
@@ -63,16 +76,14 @@ export function productItem(product) {
 }
 
 
-// --------------------------------------------------
+// ==================================================
 // Product hero
-// --------------------------------------------------
+// ==================================================
 
-/**
- * Creates the product image area.
- */
 function productHero(product) {
   return `
     <div class="detail-hero">
+
       ${
         product.image
           ? `
@@ -82,21 +93,21 @@ function productHero(product) {
             />
           `
           : `
-            <span aria-hidden="true">⌗</span>
+            <span aria-hidden="true">
+              ⌗
+            </span>
           `
       }
+
     </div>
   `;
 }
 
 
-// --------------------------------------------------
+// ==================================================
 // Product header
-// --------------------------------------------------
+// ==================================================
 
-/**
- * Creates the product name and brand.
- */
 function productHeader(product) {
   return `
     <section class="page-intro">
@@ -124,19 +135,18 @@ function productHeader(product) {
 }
 
 
-// --------------------------------------------------
+// ==================================================
 // Product summary
-// --------------------------------------------------
+// ==================================================
 
-/**
- * Creates the price and Nutri-Score cards.
- */
 function productSummary(product) {
   return `
     <div class="product-grid">
 
       <div>
-        <span>Price</span>
+        <span>
+          Price
+        </span>
 
         <b>
           ${escapeHtml(
@@ -146,7 +156,9 @@ function productSummary(product) {
       </div>
 
       <div>
-        <span>Nutri-Score</span>
+        <span>
+          Nutri-Score
+        </span>
 
         <b class="grade">
           ${escapeHtml(
@@ -160,17 +172,58 @@ function productSummary(product) {
 }
 
 
-// --------------------------------------------------
-// Product information
-// --------------------------------------------------
+// ==================================================
+// Inventory button
+// ==================================================
 
-/**
- * Creates the main product information section.
- */
+function inventoryButton(product) {
+  const inInventory =
+    isInInventory(product.code);
+
+  if (inInventory) {
+    return `
+      <div class="item-actions">
+
+        <button
+          class="button"
+          type="button"
+          data-remove-inventory="${escapeHtml(product.code)}"
+        >
+          Remove from inventory
+        </button>
+
+      </div>
+    `;
+  }
+
+  return `
+    <div class="item-actions">
+
+      <button
+        class="button"
+        type="button"
+        data-add-inventory="${escapeHtml(product.code)}"
+      >
+        Add to inventory
+      </button>
+
+    </div>
+  `;
+}
+
+
+// ==================================================
+// Product information
+// ==================================================
+
 function productInformation(product) {
   return `
     <div class="section-head">
-      <h2>About this product</h2>
+
+      <h2>
+        About this product
+      </h2>
+
     </div>
 
     <p>
@@ -183,41 +236,57 @@ function productInformation(product) {
     <div class="info-list">
 
       <div>
-        <span>Product type</span>
+
+        <span>
+          Product type
+        </span>
 
         <b>
           ${escapeHtml(
             product.type || 'Product'
           )}
         </b>
+
       </div>
 
       <div>
-        <span>Categories</span>
+
+        <span>
+          Categories
+        </span>
 
         <b>
           ${escapeHtml(
             product.categories || 'Not listed'
           )}
         </b>
+
       </div>
 
       <div>
-        <span>Ingredients</span>
+
+        <span>
+          Ingredients
+        </span>
 
         <b>
           ${escapeHtml(
             product.ingredients || 'Not listed'
           )}
         </b>
+
       </div>
 
       <div>
-        <span>Nutrition</span>
+
+        <span>
+          Nutrition
+        </span>
 
         <b>
           ${formatNutrition(product)}
         </b>
+
       </div>
 
     </div>
@@ -225,61 +294,69 @@ function productInformation(product) {
 }
 
 
-// --------------------------------------------------
+// ==================================================
 // Nutrition
-// --------------------------------------------------
+// ==================================================
 
-/**
- * Formats the nutrition information for display.
- */
 function formatNutrition(product) {
-  const energy = product.nutrition?.energy_kcal;
+  const energy =
+    product.nutrition?.energy_kcal;
 
   if (energy == null) {
     return 'Not available';
   }
 
-  return `${escapeHtml(energy)} kcal per 100g`;
+  return `
+    ${escapeHtml(energy)}
+    kcal per 100g
+  `;
 }
 
 
-// --------------------------------------------------
+// ==================================================
 // Data note
-// --------------------------------------------------
+// ==================================================
 
-/**
- * Displays information about the product data source.
- */
 function productDataNote() {
   return `
     <p class="data-note">
-      The lookup searches Open Food Facts, Open Beauty Facts,
-      Open Pet Food Facts, and Open Products Facts.
-      Traffic-light colours use UK front-of-pack solid-food
-      thresholds and are calculated from available per-100g data.
+
+      The lookup searches Open Food Facts,
+      Open Beauty Facts, Open Pet Food Facts,
+      and Open Products Facts.
+
+      Traffic-light colours use UK
+      front-of-pack solid-food thresholds
+      and are calculated from available
+      per-100g data.
+
     </p>
   `;
 }
 
 
-// --------------------------------------------------
+// ==================================================
 // Missing product
-// --------------------------------------------------
+// ==================================================
 
-/**
- * Displays when a barcode isn't found.
- */
 export function missingItem(code) {
   return `
-    <a class="link" href="#history">
+    <a
+      class="link"
+      href="#history"
+    >
       ← Back to history
     </a>
 
     <div class="empty">
 
-      <div class="empty-icon">⌗</div>
+      <div class="empty-icon">
+        ⌗
+      </div>
 
-      <h2>Product not found</h2>
+      <h2>
+        Product not found
+      </h2>
 
       <p>
         We couldn’t find details for barcode
@@ -287,7 +364,11 @@ export function missingItem(code) {
         in the product catalogue.
       </p>
 
-      <button class="scan-action" id="try-another">
+      <button
+        class="scan-action"
+        id="try-another"
+        type="button"
+      >
         Try another barcode
       </button>
 
@@ -296,30 +377,38 @@ export function missingItem(code) {
 }
 
 
-// --------------------------------------------------
+// ==================================================
 // Lookup error
-// --------------------------------------------------
+// ==================================================
 
-/**
- * Displays when the API request fails.
- */
 export function errorItem() {
   return `
-    <a class="link" href="#history">
+    <a
+      class="link"
+      href="#history"
+    >
       ← Back to history
     </a>
 
     <div class="empty">
 
-      <div class="empty-icon">!</div>
+      <div class="empty-icon">
+        !
+      </div>
 
-      <h2>Couldn’t load product details</h2>
+      <h2>
+        Couldn’t load product details
+      </h2>
 
       <p>
         Check your connection and try again.
       </p>
 
-      <button class="scan-action" id="retry-lookup">
+      <button
+        class="scan-action"
+        id="retry-lookup"
+        type="button"
+      >
         Try again
       </button>
 

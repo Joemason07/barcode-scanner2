@@ -10,17 +10,25 @@
 // #settings
 // #item/5000112548167
 
+
 import { app } from './dom.js';
+
 import { stopCamera } from './camera.js';
+
 import { bindPageEvents } from './events.js';
 
 import { updateNavigation } from './components/navigation.js';
 
 import { home } from './pages/home.js';
+
 import { scan } from './pages/scan.js';
+
 import { history as historyPage } from './pages/history.js';
-import { inventory } from './pages/inventory.js';
+
+import { inventory } from './pages/Inventory.js';
+
 import { settings } from './pages/settings.js';
+
 import { loadingItem } from './pages/item.js';
 
 
@@ -98,25 +106,38 @@ function getPageTemplate(
  * Renders the current page.
  */
 export function render() {
-  // Stop the camera whenever the page changes.
+
+  // Stop the camera whenever
+  // the page changes.
   stopCamera();
+
 
   const {
     page,
     id
   } = getRoute();
 
+
   // Render the page.
   app.innerHTML =
-    getPageTemplate(page, id);
+    getPageTemplate(
+      page,
+      id
+    );
 
-  // Update the active navigation item.
+
+  // Update the active
+  // navigation item.
   updateNavigation(page);
 
-  // Move keyboard focus to the application.
+
+  // Move keyboard focus
+  // to the application.
   app.focus();
 
-  // Set up interactions for the page.
+
+  // Set up interactions
+  // for the current page.
   bindPageEvents(
     page,
     id,
