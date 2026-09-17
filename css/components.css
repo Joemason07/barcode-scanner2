@@ -1,0 +1,148 @@
+/* ==========================================================================
+   Scanly — Shared Components
+   ========================================================================== */
+
+
+/* ==========================================================================
+   1. Buttons
+   ========================================================================== */
+
+   .button {
+    min-height: 48px;
+  
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+  
+    padding: 0 18px;
+  
+    border: 0;
+    border-radius: var(--radius-md);
+  
+    background: var(--brand);
+    color: white;
+  
+    font-size: 13px;
+    font-weight: 800;
+  
+    text-decoration: none;
+  
+    cursor: pointer;
+  
+    transition:
+      transform 0.15s ease,
+      box-shadow 0.15s ease,
+      opacity 0.15s ease;
+  }
+  
+  .button:hover {
+    transform: translateY(-1px);
+  
+    box-shadow:
+      0 8px 18px rgba(22, 73, 67, 0.15);
+  }
+  
+  .button:active {
+    transform: scale(0.97);
+  }
+  
+  .button:disabled {
+    cursor: not-allowed;
+  
+    opacity: 0.5;
+  }
+  
+  
+  /* ==========================================================================
+     2. Empty states
+     ========================================================================== */
+  
+  .empty-state {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  
+    padding: 52px 24px;
+  
+    border: 1px solid var(--line);
+    border-radius: var(--radius-xl);
+  
+    background: var(--paper);
+  
+    text-align: center;
+  
+    box-shadow: var(--shadow);
+  }
+  
+  .empty-state-icon {
+    width: 58px;
+    height: 58px;
+  
+    display: grid;
+    place-items: center;
+  
+    margin-bottom: 18px;
+  
+    border-radius: 18px;
+  
+    background: var(--canvas);
+    color: var(--brand);
+  
+    font-size: 28px;
+  }
+  
+  .empty-state h2 {
+    margin-bottom: 8px;
+  
+    color: var(--brand);
+  }
+  
+  .empty-state p {
+    max-width: 360px;
+  
+    margin-bottom: 22px;
+  
+    font-size: 14px;
+  }
+  
+  
+  /* ==========================================================================
+     3. Focus states
+     ========================================================================== */
+  
+  button:focus-visible,
+  a:focus-visible,
+  input:focus-visible,
+  select:focus-visible,
+  textarea:focus-visible {
+    outline: 3px solid rgba(217, 237, 113, 0.8);
+    outline-offset: 3px;
+  }
+  
+  
+  /* ==========================================================================
+     4. Reduced motion
+     ========================================================================== */
+  
+  @media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+      scroll-behavior: auto !important;
+  
+      transition-duration: 0.01ms !important;
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+    }
+  }
+  
+  
+  /* ==========================================================================
+     5. Mobile
+     ========================================================================== */
+  
+  @media (max-width: 480px) {
+    .empty-state {
+      padding: 42px 20px;
+    }
+  }

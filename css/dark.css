@@ -1,0 +1,207 @@
+/* ==========================================================================
+   Scanly — Dark Mode
+   ========================================================================== */
+
+
+/* ==========================================================================
+   1. Dark theme variables
+   ========================================================================== */
+
+   body.dark {
+    --ink: #f1f5f2;
+    --muted: #9aa9a5;
+  
+    --canvas: #101816;
+    --paper: #18211f;
+    --line: #2a3633;
+  
+    --brand: #8fd0c3;
+    --lime: #d9ed71;
+  
+    --shadow:
+      0 12px 30px rgba(0, 0, 0, 0.25);
+  }
+  
+  
+  /* ==========================================================================
+     2. Body
+     ========================================================================== */
+  
+  body.dark {
+    background: var(--canvas);
+    color: var(--ink);
+  }
+  
+  
+  /* ==========================================================================
+     3. Header
+     ========================================================================== */
+  
+  body.dark .icon-button {
+    background: var(--paper);
+    border-color: var(--line);
+    color: var(--ink);
+  }
+  
+  
+  /* ==========================================================================
+     4. Navigation
+     ========================================================================== */
+  
+  body.dark .bottom-nav {
+    background: var(--paper);
+    border-color: var(--line);
+  }
+  
+  body.dark .bottom-nav a {
+    color: var(--muted);
+  }
+  
+  body.dark .bottom-nav a.active {
+    color: var(--brand);
+  }
+  
+  
+  /* ==========================================================================
+     5. Hero
+     ========================================================================== */
+  
+  body.dark .hero {
+    background: #12332f;
+  }
+  
+  body.dark .hero p {
+    color: rgba(255, 255, 255, 0.72);
+  }
+  
+  
+  /* ==========================================================================
+     6. Cards
+     ========================================================================== */
+  
+  body.dark .stat,
+  body.dark .scan-card,
+  body.dark .inventory-card,
+  body.dark .detail-hero,
+  body.dark .product-section,
+  body.dark .setting,
+  body.dark .empty-state,
+  body.dark .traffic-section {
+    border-color: var(--line);
+    background: var(--paper);
+  }
+  
+  
+  /* ==========================================================================
+     7. Inventory
+     ========================================================================== */
+  
+  body.dark .inventory-card-footer {
+    border-color: var(--line);
+  
+    background: rgba(16, 24, 22, 0.45);
+  }
+  
+  body.dark .inventory-card-controls {
+    border-color: var(--line);
+    background: var(--paper);
+  }
+  
+  body.dark .inventory-card-button:hover {
+    background: var(--canvas);
+  }
+  
+  body.dark .inventory-card-remove:hover {
+    background: #382522;
+    color: #e58b7d;
+  }
+  
+  
+  /* ==========================================================================
+     8. History
+     ========================================================================== */
+  
+  body.dark .clear-history {
+    border-color: var(--line);
+    background: var(--paper);
+  }
+  
+  body.dark .clear-history:hover {
+    border-color: #59403b;
+  
+    background: #382522;
+    color: #e58b7d;
+  }
+  
+  
+  /* ==========================================================================
+     9. Scanner
+     ========================================================================== */
+  
+  body.dark .option {
+    border-color: var(--line);
+    background: var(--paper);
+  }
+  
+  body.dark .option:hover {
+    background: #202b28;
+  }
+  
+  
+  /* ==========================================================================
+     10. Product detail
+     ========================================================================== */
+  
+  body.dark .product-summary-item,
+  body.dark .nutrition-row,
+  body.dark .data-note,
+  body.dark .detail-code,
+  body.dark .product-image {
+    background: var(--canvas);
+  }
+  
+  body.dark .inventory-button.remove {
+    border-color: var(--line);
+    background: var(--canvas);
+    color: var(--brand);
+  }
+  
+  
+  /* ==========================================================================
+     11. Traffic lights
+     ========================================================================== */
+  
+  body.dark .traffic-light.green {
+    background: #263622;
+  }
+  
+  body.dark .traffic-light.amber {
+    background: #3a3520;
+  }
+  
+  body.dark .traffic-light.red {
+    background: #3a2924;
+  }
+  
+  body.dark .traffic-light.unknown {
+    background: var(--canvas);
+  }
+  
+  
+  /* ==========================================================================
+     12. Empty state
+     ========================================================================== */
+  
+  body.dark .empty-state-icon {
+    background: var(--canvas);
+  }
+  
+  
+  /* ==========================================================================
+     13. Toast
+     ========================================================================== */
+  
+  body.dark .toast {
+    background: #e8efeb;
+    color: #172321;
+  }

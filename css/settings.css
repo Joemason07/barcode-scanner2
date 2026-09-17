@@ -1,0 +1,147 @@
+/* ==========================================================================
+   Scanly — Settings
+   ========================================================================== */
+
+
+/* ==========================================================================
+   1. Settings list
+   ========================================================================== */
+
+   .settings-list {
+    display: flex;
+    flex-direction: column;
+  
+    gap: 10px;
+  
+    margin-top: 22px;
+  }
+  
+  
+  /* ==========================================================================
+     2. Setting
+     ========================================================================== */
+  
+  .setting {
+    display: flex;
+    align-items: center;
+  
+    gap: 16px;
+  
+    padding: 16px;
+  
+    border: 1px solid var(--line);
+    border-radius: var(--radius-lg);
+  
+    background: var(--paper);
+  
+    box-shadow: var(--shadow);
+  }
+  
+  .setting-content {
+    min-width: 0;
+  
+    flex: 1;
+  }
+  
+  .setting-title {
+    margin-bottom: 4px;
+  
+    color: var(--ink);
+  
+    font-size: 14px;
+    font-weight: 800;
+  }
+  
+  .setting-description {
+    color: var(--muted);
+  
+    font-size: 12px;
+    line-height: 1.45;
+  }
+  
+  
+  /* ==========================================================================
+     3. Toggle
+     ========================================================================== */
+  
+  .toggle {
+    position: relative;
+  
+    flex: 0 0 auto;
+  
+    width: 48px;
+    height: 28px;
+  
+    padding: 0;
+  
+    border: 0;
+    border-radius: 999px;
+  
+    background: #cfd5d1;
+  
+    cursor: pointer;
+  
+    transition:
+      background 0.2s ease;
+  }
+  
+  .toggle::after {
+    content: '';
+  
+    position: absolute;
+  
+    top: 3px;
+    left: 3px;
+  
+    width: 22px;
+    height: 22px;
+  
+    border-radius: 50%;
+  
+    background: white;
+  
+    box-shadow:
+      0 2px 5px rgba(0, 0, 0, 0.15);
+  
+    transition:
+      transform 0.2s ease;
+  }
+  
+  .toggle.active {
+    background: var(--brand);
+  }
+  
+  .toggle.active::after {
+    transform: translateX(20px);
+  }
+  
+  
+  /* ==========================================================================
+     4. Toggle accessibility
+     ========================================================================== */
+  
+  .toggle:focus-visible {
+    outline: 3px solid rgba(217, 237, 113, 0.8);
+    outline-offset: 3px;
+  }
+  
+  
+  /* ==========================================================================
+     5. Mobile
+     ========================================================================== */
+  
+  @media (max-width: 480px) {
+    .setting {
+      gap: 12px;
+  
+      padding: 14px;
+    }
+  
+    .setting-title {
+      font-size: 13px;
+    }
+  
+    .setting-description {
+      font-size: 11px;
+    }
+  }

@@ -1,0 +1,18 @@
+/* ==========================================================================
+   Scanly — Main stylesheet
+   ========================================================================== */
+
+   @import url('./base.css');
+   @import url('./layout.css');
+   @import url('./components.css');
+   @import url('./home.css');
+   @import url('./scan.css');
+   @import url('./inventory.css');
+   @import url('./history.css');
+   @import url('./settings.css');
+   @import url('./item.css');
+   @import url('./traffic-lights.css');
+   @import url('./loading.css');
+   @import url('./toast.css');
+   @import url('./dark.css');
+   @import url('./responsive.css');

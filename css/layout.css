@@ -1,0 +1,177 @@
+/* ==========================================================================
+   Scanly — Layout
+   ========================================================================== */
+
+
+/* ==========================================================================
+   1. App shell
+   ========================================================================== */
+
+   .app-shell {
+    width: 100%;
+    max-width: 680px;
+  
+    min-height: 100vh;
+  
+    margin: 0 auto;
+  
+    padding:
+      0
+      20px
+      84px;
+  }
+  
+  
+  /* ==========================================================================
+     2. Top bar
+     ========================================================================== */
+  
+  .topbar {
+    height: 82px;
+  
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  
+  
+  /* ==========================================================================
+     3. Brand
+     ========================================================================== */
+  
+  .brand {
+    display: flex;
+    align-items: center;
+  
+    gap: 7px;
+  
+    font-size: 23px;
+    font-weight: 800;
+  
+    letter-spacing: -1.5px;
+  }
+  
+  .brand-mark {
+    width: 31px;
+    height: 31px;
+  
+    display: grid;
+    place-items: center;
+  
+    border-radius: var(--radius-sm);
+  
+    background: var(--brand);
+    color: var(--lime);
+  
+    font-family: Georgia, serif;
+    font-size: 28px;
+    line-height: 1;
+  }
+  
+  
+  /* ==========================================================================
+     4. Header icon button
+     ========================================================================== */
+  
+  .icon-button {
+    width: 42px;
+    height: 42px;
+  
+    display: grid;
+    place-items: center;
+  
+    border: 1px solid var(--line);
+    border-radius: 50%;
+  
+    background: var(--paper);
+    color: var(--ink);
+  
+    font-size: 22px;
+  
+    cursor: pointer;
+  }
+  
+  
+  /* ==========================================================================
+     5. Main application area
+     ========================================================================== */
+  
+  #app {
+    width: 100%;
+  
+    padding-bottom: 20px;
+  }
+  
+  
+  /* ==========================================================================
+     6. Bottom navigation
+     ========================================================================== */
+  
+  .bottom-nav {
+    position: fixed;
+  
+    left: 0;
+    right: 0;
+    bottom: 0;
+  
+    z-index: 100;
+  
+    width: 100%;
+    height: 64px;
+  
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+  
+    background: var(--paper);
+  
+    border-top: 1px solid var(--line);
+  }
+  
+  .bottom-nav a {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  
+    gap: 3px;
+  
+    color: var(--muted);
+  
+    font-size: 10px;
+    font-weight: 600;
+  
+    text-decoration: none;
+  }
+  
+  .bottom-nav a.active {
+    color: var(--brand);
+  }
+  
+  .nav-icon {
+    font-size: 19px;
+    line-height: 20px;
+  }
+  
+  .bottom-nav a.active .nav-icon {
+    color: var(--brand);
+  }
+  
+  
+  /* ==========================================================================
+     7. Larger screens
+     ========================================================================== */
+  
+  @media (min-width: 700px) {
+    .app-shell {
+      padding-top: 8px;
+    }
+  
+    .bottom-nav {
+      left: 50%;
+      right: auto;
+  
+      width: min(680px, 100%);
+  
+      transform: translateX(-50%);
+    }
+  }

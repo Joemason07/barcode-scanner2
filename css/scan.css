@@ -1,0 +1,189 @@
+/* ==========================================================================
+   Scanly — Scanner
+   ========================================================================== */
+
+
+/* ==========================================================================
+   1. Scanner container
+   ========================================================================== */
+
+   .scanner {
+    position: relative;
+  
+    overflow: hidden;
+  
+    min-height: 420px;
+  
+    border-radius: var(--radius-hero);
+  
+    background: #101816;
+  
+    box-shadow: var(--shadow);
+  }
+  
+  
+  /* ==========================================================================
+     2. Camera video
+     ========================================================================== */
+  
+  .scanner video {
+    width: 100%;
+    height: 420px;
+  
+    display: block;
+  
+    object-fit: cover;
+  
+    background: #101816;
+  }
+  
+  
+  /* ==========================================================================
+     3. Scanner interface
+     ========================================================================== */
+  
+  .scanner-ui {
+    position: absolute;
+  
+    inset: 0;
+  
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  
+    padding: 30px;
+  
+    pointer-events: none;
+  }
+  
+  .scanner-ui::before {
+    content: '';
+  
+    width: 72%;
+    max-width: 300px;
+  
+    aspect-ratio: 1;
+  
+    border: 2px solid var(--lime);
+    border-radius: 24px;
+  
+    box-shadow:
+      0 0 0 999px rgba(0, 0, 0, 0.28);
+  }
+  
+  
+  /* ==========================================================================
+     4. Scanner label
+     ========================================================================== */
+  
+  .scanner-label {
+    position: absolute;
+  
+    bottom: 28px;
+  
+    padding: 9px 14px;
+  
+    border-radius: 999px;
+  
+    background: rgba(16, 24, 22, 0.78);
+    color: white;
+  
+    font-size: 12px;
+    font-weight: 700;
+  
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+  }
+  
+  
+  /* ==========================================================================
+     5. Scan options
+     ========================================================================== */
+  
+  .scan-options {
+    display: grid;
+  
+    grid-template-columns:
+      repeat(2, 1fr);
+  
+    gap: 12px;
+  
+    margin-top: 14px;
+  }
+  
+  .option {
+    min-height: 58px;
+  
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  
+    padding: 12px 16px;
+  
+    border: 1px solid var(--line);
+    border-radius: var(--radius-lg);
+  
+    background: var(--paper);
+    color: var(--brand);
+  
+    font-size: 13px;
+    font-weight: 800;
+  
+    cursor: pointer;
+  
+    box-shadow: var(--shadow);
+  
+    transition:
+      transform 0.15s ease,
+      background 0.15s ease;
+  }
+  
+  .option:hover {
+    transform: translateY(-2px);
+  
+    background: #ffffff;
+  }
+  
+  .option:active {
+    transform: scale(0.98);
+  }
+  
+  
+  /* ==========================================================================
+     6. Scanner responsive styles
+     ========================================================================== */
+  
+  @media (max-width: 480px) {
+    .scanner {
+      min-height: 360px;
+  
+      border-radius: var(--radius-xl);
+    }
+  
+    .scanner video {
+      height: 360px;
+    }
+  
+    .scanner-ui {
+      padding: 20px;
+    }
+  
+    .scanner-ui::before {
+      width: 76%;
+  
+      border-radius: 20px;
+    }
+  
+    .scan-options {
+      gap: 8px;
+    }
+  
+    .option {
+      min-height: 54px;
+  
+      padding: 10px;
+  
+      font-size: 12px;
+    }
+  }
