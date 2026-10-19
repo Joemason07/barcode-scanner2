@@ -1,77 +1,91 @@
-// Reusable scan card.
-//
-// Displays a scanned product in lists such as
-// the Home page and History page.
+
+/**
+ * Reusable Scanly product card.
+ *
+ * Used on the Home page and History page.
+ * Styled to match the Inventory cards.
+ */
 
 import { escapeHtml } from '../utils.js';
 
-
-// --------------------------------------------------
-// Scan card
-// --------------------------------------------------
-
 export function scanCard(item) {
-  const name =
-    item.name || 'Unnamed product';
-
-  const code =
-    item.code || '';
-
-  const time =
-    item.time || '';
+  const name = item.name || 'Unnamed product';
+  const brand = item.brand || '';
+  const code = item.code || '';
+  const image = item.image || '';
+  const time = item.time || item.scannedAt || '';
 
   return `
-    <a
-      class="scan-card"
-      href="#item/${encodeURIComponent(code)}"
-    >
+    <article class="scan-card">
 
-      <div class="code">
+      <a
+        class="scan-card-link"
+        href="#item/${encodeURIComponent(code)}"
+        aria-label="View ${escapeHtml(name)}"
+      >
 
-        ${
-          item.image
-            ? `
-              <img
-                src="${escapeHtml(item.image)}"
-                alt=""
-                loading="lazy"
-              />
-            `
-            : `
-              <span aria-hidden="true">
-                ⌗
-              </span>
-            `
-        }
-
-      </div>
-
-
-      <div>
-
-        <b>
-          ${escapeHtml(name)}
-        </b>
-
-        <small>
-          ${escapeHtml(code)}
+        <div class="scan-card-image">
           ${
-            time
-              ? ` · ${escapeHtml(time)}`
+            image
+              ? `
+                <img
+                  src="${escapeHtml(image)}"
+                  alt="${escapeHtml(name)}"
+                  loading="lazy"
+                />
+              `
+              : `
+                <span
+                  class="scan-card-placeholder"
+                  aria-hidden="true"
+                >
+                  ⌗
+                </span>
+              `
+          }
+        </div>
+
+        <div class="scan-card-content">
+
+          ${
+            brand
+              ? `
+                <p class="scan-card-brand">
+                  ${escapeHtml(brand)}
+                </p>
+              `
               : ''
           }
-        </small>
 
-      </div>
+          <h2 class="scan-card-name">
+            ${escapeHtml(name)}
+          </h2>
 
+          <span class="scan-card-code">
+            ${escapeHtml(code)}
+          </span>
 
-      <span
-        class="scan-card-arrow"
-        aria-hidden="true"
-      >
-        ›
-      </span>
+          ${
+            time
+              ? `
+                <span class="scan-card-time">
+                  ${escapeHtml(time)}
+                </span>
+              `
+              : ''
+          }
 
-    </a>
+        </div>
+
+        <span
+          class="scan-card-arrow"
+          aria-hidden="true"
+        >
+          ›
+        </span>
+
+      </a>
+
+    </article>
   `;
 }

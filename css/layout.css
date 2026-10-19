@@ -1,3 +1,4 @@
+
 /* ==========================================================================
    Scanly — Layout
    ========================================================================== */
@@ -10,15 +11,10 @@
    .app-shell {
     width: 100%;
     max-width: 680px;
-  
     min-height: 100vh;
-  
     margin: 0 auto;
-  
-    padding:
-      0
-      20px
-      84px;
+    padding: 0 20px 84px;
+    box-sizing: border-box;
   }
   
   
@@ -27,11 +23,13 @@
      ========================================================================== */
   
   .topbar {
-    height: 82px;
-  
-    display: flex;
+    position: relative;
+    min-height: 82px;
+    display: grid;
+    grid-template-columns: 42px minmax(0, 1fr) 42px;
     align-items: center;
-    justify-content: space-between;
+    gap: 12px;
+    box-sizing: border-box;
   }
   
   
@@ -39,30 +37,38 @@
      3. Brand
      ========================================================================== */
   
-  .brand {
+  .topbar .brand {
+    grid-column: 2;
+    justify-self: center;
+    align-self: center;
+  
+    min-width: 0;
+    margin: 0;
+  
     display: flex;
     align-items: center;
-  
+    justify-content: center;
     gap: 7px;
   
     font-size: 23px;
     font-weight: 800;
-  
     letter-spacing: -1.5px;
+    line-height: 1;
+    white-space: nowrap;
+    transform: none;
   }
   
   .brand-mark {
     width: 31px;
     height: 31px;
+    flex: 0 0 31px;
   
     display: grid;
     place-items: center;
   
     border-radius: var(--radius-sm);
-  
     background: var(--brand);
     color: var(--lime);
-  
     font-family: Georgia, serif;
     font-size: 28px;
     line-height: 1;
@@ -70,7 +76,7 @@
   
   
   /* ==========================================================================
-     4. Header icon button
+     4. Header icon buttons
      ========================================================================== */
   
   .icon-button {
@@ -82,13 +88,17 @@
   
     border: 1px solid var(--line);
     border-radius: 50%;
-  
     background: var(--paper);
     color: var(--ink);
-  
     font-size: 22px;
-  
     cursor: pointer;
+  }
+  
+  .topbar #theme-toggle {
+    grid-column: 3;
+    justify-self: end;
+    align-self: center;
+    flex-shrink: 0;
   }
   
   
@@ -98,49 +108,235 @@
   
   #app {
     width: 100%;
-  
+    min-width: 0;
     padding-bottom: 20px;
+    box-sizing: border-box;
   }
   
   
   /* ==========================================================================
-     6. Bottom navigation
+     6. Main menu button
+     ========================================================================== */
+  
+  .main-menu {
+    position: relative;
+    z-index: 1000;
+  }
+  
+  .main-menu-toggle {
+    position: fixed;
+  
+    /*
+     * The desktop shell has 8px of top padding.
+     * This positions the 42px button in the same
+     * vertical centre as the 82px header.
+     */
+    top: 28px;
+    left: max(12px, calc((100vw - 680px) / 2 + 20px));
+  
+    z-index: 1000;
+    width: 42px;
+    height: 42px;
+  
+    display: grid;
+    place-items: center;
+  
+    border: 1px solid var(--line);
+    border-radius: 12px;
+    background: var(--paper);
+    color: var(--brand);
+    font-size: 22px;
+    cursor: pointer;
+    box-shadow: 0 3px 12px rgb(0 0 0 / 7%);
+  }
+  
+  .main-menu-toggle:hover {
+    background: var(--canvas);
+  }
+  
+  body.main-menu-open .main-menu-toggle {
+    visibility: hidden;
+  }
+  
+  
+  /* ==========================================================================
+     7. Menu backdrop
+     ========================================================================== */
+  
+  .main-menu-backdrop {
+    position: fixed;
+    inset: 0;
+    z-index: 1001;
+    background: rgb(20 25 22 / 45%);
+  }
+  
+  .main-menu-backdrop[hidden] {
+    display: none;
+  }
+  
+  
+  /* ==========================================================================
+     8. Slide-out menu drawer
+     ========================================================================== */
+  
+  .main-menu-drawer {
+    position: fixed;
+    inset: 0 auto 0 0;
+    z-index: 1002;
+  
+    width: min(320px, 88vw);
+    padding: 24px 18px;
+  
+    overflow-x: hidden;
+    overflow-y: auto;
+    box-sizing: border-box;
+  
+    background: var(--paper);
+    color: var(--ink);
+    box-shadow: 8px 0 32px rgb(0 0 0 / 12%);
+  
+    transform: translateX(-105%);
+    visibility: hidden;
+  
+    transition:
+      transform 220ms ease,
+      visibility 220ms ease;
+  }
+  
+  .main-menu-drawer[aria-hidden="false"] {
+    transform: translateX(0);
+    visibility: visible;
+  }
+  
+  .main-menu-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    margin-bottom: 28px;
+  }
+  
+  .main-menu-eyebrow {
+    margin: 0 0 5px;
+    color: var(--brand);
+    font-size: 11px;
+    font-weight: 800;
+    letter-spacing: 0.14em;
+  }
+  
+  .main-menu-header h2 {
+    margin: 0;
+    font-size: 25px;
+  }
+  
+  .main-menu-close {
+    width: 40px;
+    height: 40px;
+    flex: 0 0 40px;
+  
+    display: grid;
+    place-items: center;
+  
+    border: 0;
+    border-radius: 10px;
+    background: var(--canvas);
+    color: var(--ink);
+    font-size: 26px;
+    cursor: pointer;
+  }
+  
+  .main-menu-links {
+    display: grid;
+    gap: 6px;
+  }
+  
+  .main-menu-links a {
+    display: flex;
+    align-items: center;
+    gap: 13px;
+  
+    min-height: 50px;
+    padding: 12px;
+    box-sizing: border-box;
+  
+    border-radius: 12px;
+    color: inherit;
+    text-decoration: none;
+    font-weight: 600;
+  }
+  
+  .main-menu-icon {
+    width: 28px;
+    flex: 0 0 28px;
+    text-align: center;
+    font-size: 21px;
+  }
+  
+  .main-menu-chevron {
+    margin-left: auto;
+    color: var(--muted);
+    font-size: 23px;
+  }
+  
+  .main-menu-links a:hover,
+  .main-menu-links a.active {
+    background: var(--canvas);
+    color: var(--brand);
+  }
+  
+  .main-menu-links a.active {
+    box-shadow: inset 3px 0 var(--brand);
+  }
+  
+  body.main-menu-open {
+    overflow: hidden;
+  }
+  
+  
+  /* ==========================================================================
+     9. Bottom navigation
      ========================================================================== */
   
   .bottom-nav {
     position: fixed;
-  
     left: 0;
     right: 0;
     bottom: 0;
-  
     z-index: 100;
   
     width: 100%;
-    height: 64px;
+    min-height: 64px;
   
-    display: grid;
-    grid-template-columns: repeat(5, 1fr);
+    display: flex;
+    align-items: stretch;
+    justify-content: space-around;
+    gap: 2px;
+  
+    padding-bottom: env(safe-area-inset-bottom, 0px);
+    box-sizing: border-box;
   
     background: var(--paper);
-  
     border-top: 1px solid var(--line);
   }
   
   .bottom-nav a {
+    flex: 1 1 0;
+    min-width: 0;
+  
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
-  
     gap: 3px;
   
-    color: var(--muted);
+    padding: 5px 2px;
   
+    color: var(--muted);
     font-size: 10px;
     font-weight: 600;
-  
+    text-align: center;
     text-decoration: none;
+    overflow-wrap: anywhere;
   }
   
   .bottom-nav a.active {
@@ -148,6 +344,7 @@
   }
   
   .nav-icon {
+    display: block;
     font-size: 19px;
     line-height: 20px;
   }
@@ -158,7 +355,81 @@
   
   
   /* ==========================================================================
-     7. Larger screens
+     10. Tablets and phones
+     ========================================================================== */
+  
+  @media (max-width: 600px) {
+    .app-shell {
+      padding-right: 16px;
+      padding-left: 16px;
+    }
+  
+    .topbar {
+      min-height: 76px;
+      grid-template-columns: 40px minmax(0, 1fr) 38px;
+      gap: 8px;
+    }
+  
+    .topbar .brand {
+      font-size: clamp(18px, 5vw, 23px);
+      letter-spacing: -1px;
+    }
+  
+    .topbar #theme-toggle {
+      width: 38px;
+      height: 38px;
+    }
+  
+    .main-menu-toggle {
+      top: 18px;
+      left: 12px;
+      width: 40px;
+      height: 40px;
+    }
+  }
+  
+  
+  /* ==========================================================================
+     11. Extra-narrow phones
+     ========================================================================== */
+  
+  @media (max-width: 360px) {
+    .app-shell {
+      padding-right: 12px;
+      padding-left: 12px;
+    }
+  
+    .topbar {
+      grid-template-columns: 40px minmax(0, 1fr) 34px;
+      gap: 6px;
+    }
+  
+    .topbar .brand {
+      gap: 5px;
+      font-size: 18px;
+      letter-spacing: -0.8px;
+    }
+  
+    .brand-mark {
+      width: 27px;
+      height: 27px;
+      flex-basis: 27px;
+      font-size: 24px;
+    }
+  
+    .topbar #theme-toggle {
+      width: 34px;
+      height: 34px;
+    }
+  
+    .bottom-nav a {
+      font-size: 9px;
+    }
+  }
+  
+  
+  /* ==========================================================================
+     12. Desktop
      ========================================================================== */
   
   @media (min-width: 700px) {
@@ -169,9 +440,27 @@
     .bottom-nav {
       left: 50%;
       right: auto;
-  
       width: min(680px, 100%);
-  
       transform: translateX(-50%);
     }
   }
+  
+
+/* Tablet-sized screens */
+@media (min-width: 601px) and (max-width: 699px) {
+  .main-menu-toggle {
+    top: 20px;
+  }
+}
+
+  
+  /* ==========================================================================
+     13. Accessibility
+     ========================================================================== */
+  
+  @media (prefers-reduced-motion: reduce) {
+    .main-menu-drawer {
+      transition: none;
+    }
+  }
+  

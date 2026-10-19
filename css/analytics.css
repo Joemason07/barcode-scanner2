@@ -1,0 +1,212 @@
+
+/* =========================================
+   Scanly — Analytics dashboard
+   ========================================= */
+
+   .analytics-page {
+    padding-bottom: 110px;
+  }
+  
+  /* Page introduction */
+  
+  .analytics-page .page-header {
+    margin: 10px 0 26px;
+  }
+  
+  .analytics-page .page-header .eyebrow {
+    margin-bottom: 10px;
+  }
+  
+  .analytics-page .page-header h1 {
+    margin-bottom: 10px;
+    font-size: 36px;
+    letter-spacing: -1.8px;
+  }
+  
+  .analytics-page .page-header > p:last-child {
+    max-width: 340px;
+    font-size: 14px;
+  }
+  
+  /* Inventory overview */
+  
+  .analytics-summary {
+    position: relative;
+    overflow: hidden;
+    margin: 0 0 30px;
+    padding: 22px;
+    border: 1px solid rgba(22, 73, 67, 0.08);
+    border-radius: var(--radius-xl);
+    background: var(--lime);
+    color: var(--brand);
+  }
+  
+  .analytics-summary span {
+    display: block;
+    color: var(--brand);
+    font-size: 12px;
+    font-weight: 800;
+    letter-spacing: 0.7px;
+    text-transform: uppercase;
+  }
+  
+  .analytics-summary strong {
+    display: block;
+    margin: 10px 0 5px;
+    color: var(--brand);
+    font-family: 'DM Mono', monospace;
+    font-size: 42px;
+    line-height: 1;
+    letter-spacing: -2px;
+  }
+  
+  .analytics-summary p {
+    color: var(--brand);
+    font-size: 13px;
+    opacity: 0.75;
+  }
+  
+  /* Nutrition heading */
+  
+  .analytics-page .section-head {
+    margin: 0 0 16px;
+  }
+  
+  .analytics-page .section-head h2 {
+    font-size: 21px;
+    letter-spacing: -0.7px;
+  }
+  
+  /* Nutrition card grid */
+  
+  .analytics-nutrients {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 12px;
+  }
+  
+  /* Individual nutrient cards */
+  
+  .analytics-nutrient {
+    display: flex;
+    min-width: 0;
+    min-height: 124px;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 16px;
+    padding: 17px;
+    border: 1px solid var(--line);
+    border-radius: var(--radius-lg);
+    background: var(--paper);
+    box-shadow: 0 3px 12px rgba(23, 35, 33, 0.025);
+    transition: transform 160ms ease, box-shadow 160ms ease;
+  }
+  
+  .analytics-nutrient:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 7px 18px rgba(23, 35, 33, 0.06);
+  }
+  
+  .analytics-nutrient > div {
+    min-width: 0;
+  }
+  
+  .analytics-nutrient h2 {
+    color: var(--ink);
+    font-size: 14px;
+    font-weight: 800;
+    letter-spacing: -0.2px;
+  }
+  
+  .analytics-nutrient p {
+    margin-top: 6px;
+    font-size: 10px;
+    line-height: 1.4;
+  }
+  
+  .analytics-nutrient strong {
+    display: block;
+    color: var(--brand);
+    font-family: 'DM Mono', monospace;
+    font-size: clamp(18px, 4vw, 23px);
+    font-weight: 500;
+    letter-spacing: -0.8px;
+    overflow-wrap: anywhere;
+  }
+  
+  /* Featured energy card */
+  
+  .analytics-nutrient:first-child {
+    grid-column: 1 / -1;
+    min-height: 158px;
+    padding: 22px;
+    border-color: var(--brand);
+    background: var(--brand);
+  }
+  
+  .analytics-nutrient:first-child h2 {
+    color: white;
+    font-size: 17px;
+  }
+  
+  .analytics-nutrient:first-child p {
+    color: rgba(255, 255, 255, 0.72);
+    font-size: 11px;
+  }
+  
+  .analytics-nutrient:first-child strong {
+    color: var(--lime);
+    font-size: 34px;
+    letter-spacing: -1.5px;
+  }
+  
+  /* Empty state */
+  
+  .analytics-page .empty-state {
+    margin-top: 20px;
+    padding: 36px 22px;
+  }
+  
+  .analytics-page .empty-state h2 {
+    margin-bottom: 10px;
+  }
+  
+  .analytics-page .empty-state p {
+    margin-bottom: 20px;
+    font-size: 13px;
+  }
+  
+  /* Small screens */
+  
+  @media (max-width: 380px) {
+    .analytics-nutrients {
+      gap: 9px;
+    }
+  
+    .analytics-nutrient {
+      min-height: 118px;
+      padding: 13px;
+    }
+  
+    .analytics-summary {
+      padding: 19px;
+    }
+  
+    .analytics-page .page-header h1 {
+      font-size: 32px;
+    }
+  }
+  
+  /* Accessibility */
+  
+  @media (prefers-reduced-motion: reduce) {
+    .analytics-nutrient {
+      transition: none;
+    }
+  
+    .analytics-nutrient:hover {
+      transform: none;
+    }
+  }
+  

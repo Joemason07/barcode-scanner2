@@ -31,6 +31,10 @@ import { settings } from './pages/settings.js';
 
 import { loadingItem } from './pages/item.js';
 
+import { analytics } from './pages/analytics.js';
+
+import { profilePage } from './profile/profile-page.js';
+
 
 // --------------------------------------------------
 // Route
@@ -90,6 +94,12 @@ function getPageTemplate(
 
     case 'item':
       return loadingItem(id);
+
+    case 'analytics':
+      return analytics();
+
+    case 'profile':
+      return profilePage();
 
     case 'home':
     default:

@@ -107,6 +107,10 @@ export function createProduct(
     nutrition: {
       energyKcal:
         data.energy_kcal_100g ?? null,
+      
+        energyKj:
+        data.energy_100g ?? null,
+
 
       fat:
         data.fat_100g ?? null,

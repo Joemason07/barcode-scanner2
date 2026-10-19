@@ -16,3 +16,5 @@
    @import url('./toast.css');
    @import url('./dark.css');
    @import url('./responsive.css');
+   @import url('./analytics.css');
+   @import url('../profile/profile.css');

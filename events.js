@@ -21,6 +21,8 @@ import { lookupProduct } from './api.js';
 
 import { startCamera } from './camera.js';
 
+import { updateProfile } from './profile/profile.js';
+
 
 // ==================================================
 // Global events
@@ -64,6 +66,10 @@ export function bindPageEvents(
 
     case 'history':
       setupHistoryPage(render);
+      break;
+
+    case 'profile':
+      setupProfilePage(render);
       break;
   }
 }
@@ -402,6 +408,79 @@ function setupHistoryPage(render) {
       clearHistory();
 
       render();
+    }
+  );
+}
+
+
+/**
+ * Sets up Profile page interactions.
+ */
+function setupProfilePage(render) {
+  const dialog = document.querySelector(
+    '[data-profile-dialog]'
+  );
+
+  const editButton = document.querySelector(
+    '[data-profile-edit]'
+  );
+
+  const form = document.querySelector(
+    '[data-profile-form]'
+  );
+
+  const nutritionSelect = document.querySelector(
+    '[data-profile-nutrition]'
+  );
+
+  // Open the edit dialog.
+  editButton?.addEventListener('click', () => {
+    dialog?.showModal();
+  });
+
+  // Close the dialog using either close button.
+  document.querySelectorAll(
+    '[data-profile-close]'
+  ).forEach(button => {
+    button.addEventListener('click', () => {
+      dialog?.close();
+    });
+  });
+
+  // Save the user's details.
+  form?.addEventListener('submit', event => {
+    event.preventDefault();
+
+    const formData = new FormData(form);
+
+    updateProfile({
+      displayName: String(
+        formData.get('displayName') || ''
+      ).trim(),
+
+      email: String(
+        formData.get('email') || ''
+      ).trim()
+    });
+
+    dialog?.close();
+
+    toast('Profile saved.');
+
+    render();
+  });
+
+  // Save the nutrition display preference.
+  nutritionSelect?.addEventListener(
+    'change',
+    () => {
+      updateProfile({
+        preferences: {
+          nutritionUnit: nutritionSelect.value
+        }
+      });
+
+      toast('Preference saved.');
     }
   );
 }
