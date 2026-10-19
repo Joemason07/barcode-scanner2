@@ -1,18 +1,29 @@
-// Product detail pages.
-//
-// Displays loading, successful, missing,
-// and error states for a product lookup.
-//
-// Products can also be added to or removed
-// from the user's inventory from this page.
+
+/*
+ * Product detail pages.
+ *
+ * Displays loading, successful, missing,
+ * and error states for a product lookup.
+ *
+ * Products can also be added to or removed
+ * from the user's inventory from this page.
+ */
 
 import { escapeHtml } from '../utils.js';
 
-import {
-  isInInventory
-} from '../state.js';
+import { isInInventory } from '../state.js';
 
 import { trafficLights } from '../components/traffic-lights.js';
+
+import { productOverview } from '../components/product/product-overview.js';
+
+import { nutrition } from '../components/product/nutrition.js';
+
+import { ingredients } from '../components/product/ingredients.js';
+
+import { allergens } from '../components/product/allergens.js';
+
+import { nutriScore } from '../components/product/nutriscore.js';
 
 
 // ==================================================
@@ -21,26 +32,19 @@ import { trafficLights } from '../components/traffic-lights.js';
 
 export function loadingItem(code) {
   return `
-    <a
-      class="link"
-      href="#history"
-    >
+    <a class="link" href="#history">
       ← Back to history
     </a>
 
     <div class="product-loading">
-
       <div class="loader"></div>
 
-      <h2>
-        Looking up product
-      </h2>
+      <h2>Looking up product</h2>
 
       <p>
         Finding details for
         ${escapeHtml(code)}…
       </p>
-
     </div>
   `;
 }
@@ -50,32 +54,38 @@ export function loadingItem(code) {
 // Product details
 // ==================================================
 
+
+
 export function productItem(product) {
   return `
-    <a
-      class="link"
-      href="#history"
-    >
+    <a class="link" href="#history">
       ← Back to history
     </a>
 
-    ${productHero(product)}
-
     ${productHeader(product)}
 
-    ${productSummary(product)}
+    ${productHero(product)}
+
+    ${productOverview(product)}
 
     ${inventoryButton(product)}
 
     ${trafficLights(product.traffic)}
 
+    ${nutriScore(product)}
+
+    ${nutrition(product)}
+
     ${productInformation(product)}
 
-    ${ingredientsSection(product.ingredients)}
+    ${ingredients(product)}
+
+    ${allergens(product)}
 
     ${productDataNote()}
   `;
 }
+
 
 
 // ==================================================
@@ -85,22 +95,19 @@ export function productItem(product) {
 function productHero(product) {
   return `
     <div class="detail-hero">
-
       ${
         product.image
           ? `
             <img
               src="${escapeHtml(product.image)}"
               alt="${escapeHtml(product.name)}"
+              loading="lazy"
             />
           `
           : `
-            <span aria-hidden="true">
-              ⌗
-            </span>
+            <span aria-hidden="true">⌗</span>
           `
       }
-
     </div>
   `;
 }
@@ -113,63 +120,21 @@ function productHero(product) {
 function productHeader(product) {
   return `
     <section class="page-intro">
-
       <div class="eyebrow">
         Product found
       </div>
 
       <h1>
-        ${escapeHtml(product.name)}
+        ${escapeHtml(product.name || 'Unnamed product')}
       </h1>
 
       <p>
-        ${escapeHtml(
-          product.brand || 'Brand not listed'
-        )}
+        ${escapeHtml(product.brand || 'Brand not listed')}
       </p>
-
     </section>
 
     <div class="detail-code">
-      ${escapeHtml(product.code)}
-    </div>
-  `;
-}
-
-
-// ==================================================
-// Product summary
-// ==================================================
-
-function productSummary(product) {
-  return `
-    <div class="product-grid">
-
-      <div>
-        <span>
-          Price
-        </span>
-
-        <b>
-          ${escapeHtml(
-            product.price || 'Not available'
-          )}
-        </b>
-      </div>
-
-      <div>
-        <span>
-          Nutri-Score
-        </span>
-
-        <b class="grade">
-          ${escapeHtml(
-            product.grade || '—'
-          )}
-        </b>
-
-      </div>
-
+      ${escapeHtml(product.code || 'Barcode unavailable')}
     </div>
   `;
 }
@@ -180,36 +145,35 @@ function productSummary(product) {
 // ==================================================
 
 function inventoryButton(product) {
-  const inInventory =
-    isInInventory(product.code);
+  const code = String(product.code || '');
 
-  if (inInventory) {
+  if (!code) {
+    return '';
+  }
+
+  if (isInInventory(code)) {
     return `
       <div class="item-actions">
-
         <button
           class="button"
           type="button"
-          data-remove-inventory="${escapeHtml(product.code)}"
+          data-remove-inventory="${escapeHtml(code)}"
         >
           Remove from inventory
         </button>
-
       </div>
     `;
   }
 
   return `
     <div class="item-actions">
-
       <button
         class="button"
         type="button"
-        data-add-inventory="${escapeHtml(product.code)}"
+        data-add-inventory="${escapeHtml(code)}"
       >
         Add to inventory
       </button>
-
     </div>
   `;
 }
@@ -220,104 +184,36 @@ function inventoryButton(product) {
 // ==================================================
 
 function productInformation(product) {
-  return `
-    <div class="section-head">
-
-      <h2>
-        About this product
-      </h2>
-
-    </div>
-
-    <p>
-      ${escapeHtml(
-        product.description ||
-        'No description is available for this product.'
-      )}
-    </p>
-
-    <div class="info-list">
-
-      <div>
-
-        <span>
-          Product type
-        </span>
-
-        <b>
-          ${escapeHtml(
-            product.type || 'Product'
-          )}
-        </b>
-
-      </div>
-
-      <div>
-
-        <span>
-          Categories
-        </span>
-
-        <b>
-          ${escapeHtml(
-            product.categories || 'Not listed'
-          )}
-        </b>
-
-      </div>
-
-      <div>
-
-        <span>
-          Nutrition
-        </span>
-
-        <b>
-          ${formatNutrition(product)}
-        </b>
-
-      </div>
-
-    </div>
-  `;
-}
-
-
-// ==================================================
-// Ingredients
-// ==================================================
-
-function ingredientsSection(ingredients) {
-  if (!ingredients) {
-    return '';
-  }
-
-  const items =
-    ingredients
-      .split(',')
-      .map(item => item.trim())
-      .filter(Boolean);
-
-  if (items.length === 0) {
-    return '';
-  }
+  const description =
+    product.genericName ||
+    product.categories ||
+    '';
 
   return `
     <section class="product-section">
 
-      <h2>
-        Ingredients
-      </h2>
+      <div class="section-head">
+        <h2>About this product</h2>
+      </div>
 
-      <ul class="ingredients-list">
+      <p>
+        ${
+          description
+            ? escapeHtml(description)
+            : 'No description is available for this product.'
+        }
+      </p>
 
-        ${items.map(ingredient => `
-          <li class="ingredients-item">
-            ${escapeHtml(ingredient)}
-          </li>
-        `).join('')}
-
-      </ul>
+      ${
+        product.countries
+          ? `
+            <p class="product-meta">
+              <strong>Countries:</strong>
+              ${escapeHtml(product.countries)}
+            </p>
+          `
+          : ''
+      }
 
     </section>
   `;
@@ -325,41 +221,18 @@ function ingredientsSection(ingredients) {
 
 
 // ==================================================
-// Nutrition
-// ==================================================
-
-function formatNutrition(product) {
-  const energy =
-    product.nutrition?.energy_kcal;
-
-  if (energy == null) {
-    return 'Not available';
-  }
-
-  return `
-    ${escapeHtml(energy)}
-    kcal per 100g
-  `;
-}
-
-
-// ==================================================
-// Data note
+// Product data note
 // ==================================================
 
 function productDataNote() {
   return `
     <p class="data-note">
+      Product information depends on the available
+      catalogue data.
 
-      The lookup searches Open Food Facts,
-      Open Beauty Facts, Open Pet Food Facts,
-      and Open Products Facts.
-
-      Traffic-light colours use UK
-      front-of-pack solid-food thresholds
-      and are calculated from available
-      per-100g data.
-
+      Traffic-light colours use UK front-of-pack
+      solid-food thresholds and are calculated
+      from available per-100g nutrition data.
     </p>
   `;
 }
@@ -371,10 +244,7 @@ function productDataNote() {
 
 export function missingItem(code) {
   return `
-    <a
-      class="link"
-      href="#history"
-    >
+    <a class="link" href="#history">
       ← Back to history
     </a>
 
@@ -384,9 +254,7 @@ export function missingItem(code) {
         ⌗
       </div>
 
-      <h2>
-        Product not found
-      </h2>
+      <h2>Product not found</h2>
 
       <p>
         We couldn’t find details for barcode
@@ -413,10 +281,7 @@ export function missingItem(code) {
 
 export function errorItem() {
   return `
-    <a
-      class="link"
-      href="#history"
-    >
+    <a class="link" href="#history">
       ← Back to history
     </a>
 
@@ -426,9 +291,7 @@ export function errorItem() {
         !
       </div>
 
-      <h2>
-        Couldn’t load product details
-      </h2>
+      <h2>Couldn’t load product details</h2>
 
       <p>
         Check your connection and try again.
