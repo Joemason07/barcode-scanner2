@@ -1,0 +1,135 @@
+/* ==========================================================================
+   1. Product hero and heading
+   ========================================================================== */
+
+   .page-intro {
+    text-align: center;
+  }
+  
+  .page-intro h1 {
+    overflow-wrap: anywhere;
+  }
+  
+  .page-intro p {
+    text-align: center;
+  }
+  
+  
+.detail-code {
+  display: block;
+  width: fit-content;
+  margin: 6px auto 0;
+  padding: 6px 9px;
+
+  border-radius: 999px;
+  background: var(--canvas);
+  color: var(--muted);
+
+  font-family: 'DM Mono', monospace;
+  font-size: 10px;
+  text-align: center;
+}
+
+.detail-hero {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  box-sizing: border-box;
+  width: 100%;
+  min-height: 280px;
+  padding: 16px;
+  margin: 24px auto 0;
+
+  overflow: hidden;
+  border: 1px solid var(--line, #e5e5df);
+  border-radius: var(--radius-lg);
+
+  background: var(--canvas);
+}
+
+.detail-hero img {
+  display: block;
+
+  width: 100%;
+  max-width: 280px;
+  height: 260px;
+  margin: 0 auto;
+
+  object-fit: contain;
+  object-position: center;
+}
+
+  /* ==========================================================================
+     12. Mobile
+     ========================================================================== */
+  
+     @media (max-width: 600px) {
+      .detail-hero {
+        min-height: 210px;
+        padding: 12px;
+      }
+    
+      .detail-hero img {
+        max-width: 240px;
+        height: 210px;
+      }
+    
+      .page-intro h1 {
+        font-size: 24px;
+        letter-spacing: -1.2px;
+      }
+    
+      .product-header {
+        gap: 14px;
+      }
+    
+      .product-image {
+        max-width: 260px;
+        height: 220px;
+        border-radius: var(--radius-md);
+      }
+    
+      .product-name {
+        font-size: 24px;
+        letter-spacing: -1.2px;
+      }
+    
+      .product-summary {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+      }
+    
+      .product-section {
+        padding: 16px;
+      }
+    }
+    
+    @media (max-width: 420px) {
+      .detail-hero img {
+        max-width: 220px;
+        height: 190px;
+      }
+    
+      .product-header {
+        flex-direction: column;
+        align-items: center;
+      }
+    
+      .product-image {
+        max-width: 240px;
+        height: 200px;
+      }
+    
+      .product-summary {
+        grid-template-columns: 1fr;
+      }
+    
+      .info-row {
+        flex-direction: column;
+        gap: 3px;
+      }
+    
+      .info-row dd {
+        text-align: left;
+      }
+    }

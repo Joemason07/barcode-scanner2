@@ -10,11 +10,14 @@
    @import url('./inventory.css');
    @import url('./history.css');
    @import url('./settings.css');
-   @import url('./item.css');
-   @import url('./traffic-lights.css');
+   @import url('./product/item.css');
+   @import url('./product//traffic-lights.css');
    @import url('./loading.css');
    @import url('./toast.css');
    @import url('./dark.css');
    @import url('./responsive.css');
    @import url('./analytics.css');
    @import url('../profile/profile.css');
+   @import url('./product//store-label.css');
+   @import url('./product-search.css');
+   @import url('./inventory-expiry.css');

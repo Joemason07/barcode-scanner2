@@ -1,0 +1,15 @@
+/* ==========================================================================
+     11. Data note
+     ========================================================================== */
+  
+     .data-note {
+        margin-top: 14px;
+        padding: 14px 16px;
+      
+        border-radius: var(--radius-md);
+        background: var(--canvas);
+      
+        color: var(--muted);
+        font-size: 11px;
+        line-height: 1.5;
+      }

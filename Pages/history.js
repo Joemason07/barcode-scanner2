@@ -4,7 +4,7 @@
 // and saved to the local scan history.
 
 import { scans } from '../state.js';
-import { scanCard } from '../components/scan-card.js';
+import { scanCard } from '../components/cards/scan-card.js';
 
 export function history() {
   return `

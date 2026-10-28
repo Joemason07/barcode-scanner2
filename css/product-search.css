@@ -1,0 +1,273 @@
+
+/* ==========================================================================
+   Scanly — Product Search
+   ========================================================================== */
+
+   .scan-divider {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin: 26px 0 24px;
+    color: #85877f;
+    font-size: 0.65rem;
+    font-weight: 800;
+    letter-spacing: 0.13em;
+  }
+  
+  .scan-divider::before,
+  .scan-divider::after {
+    content: "";
+    flex: 1;
+    height: 1px;
+    background: var(--line, #e5e5df);
+  }
+  
+  /* Search section */
+  
+  .product-search {
+    margin: 0 0 32px;
+  }
+  
+  .product-search > label {
+    display: block;
+    margin-bottom: 12px;
+    color: var(--brand, #164943);
+    font-size: 1rem;
+    font-weight: 750;
+    letter-spacing: -0.025em;
+  }
+  
+  /* Search field */
+  
+  #product-search-form {
+    margin: 0;
+  }
+  
+  .product-search-field {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    min-height: 56px;
+    padding: 5px 6px 5px 15px;
+    background: var(--paper, #fffefa);
+    border: 1px solid var(--line, #e5e5df);
+    border-radius: 12px;
+    transition: border-color 160ms ease;
+  }
+  
+  .product-search-field:focus-within {
+    border-color: var(--brand, #164943);
+  }
+  
+  .product-search-field > span {
+    flex: 0 0 auto;
+    color: var(--brand, #164943);
+    font-size: 1.5rem;
+    line-height: 1;
+  }
+  
+  #product-search-input {
+    flex: 1;
+    width: 100%;
+    min-width: 0;
+    padding: 10px 0;
+    color: var(--brand, #164943);
+    background: transparent;
+    border: 0;
+    outline: none;
+    font: inherit;
+    font-size: 0.85rem;
+  }
+  
+  #product-search-input::placeholder {
+    color: #999b93;
+  }
+  
+  #product-search-submit {
+    flex: 0 0 auto;
+    min-height: 42px;
+    padding: 0 15px;
+    color: #fffefa;
+    background: var(--brand, #164943);
+    border: 0;
+    border-radius: 8px;
+    font: inherit;
+    font-size: 0.8rem;
+    font-weight: 700;
+    cursor: pointer;
+    transition: background 150ms ease;
+  }
+  
+  #product-search-submit:hover {
+    background: #103b36;
+  }
+  
+  #product-search-submit:focus-visible {
+    outline: 2px solid var(--brand, #164943);
+    outline-offset: 3px;
+  }
+  
+  .product-search-hint {
+    margin: 10px 0 0;
+    color: #777b74;
+    font-size: 0.78rem;
+    line-height: 1.5;
+  }
+  
+  /* Results */
+  
+  #product-search-results {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+    margin-top: 14px;
+  }
+  
+  .product-search-result {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    width: 100%;
+    padding: 12px 2px;
+    color: inherit;
+    text-align: left;
+    background: transparent;
+    border: 0;
+    border-bottom: 1px solid var(--line, #e5e5df);
+    border-radius: 0;
+    cursor: pointer;
+  }
+  
+  .product-search-result:first-child {
+    border-top: 1px solid var(--line, #e5e5df);
+  }
+  
+  .product-search-result:hover .product-search-result-name {
+    color: var(--brand, #164943);
+  }
+  
+  .product-search-result-image {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex: 0 0 54px;
+    width: 54px;
+    height: 54px;
+    overflow: hidden;
+    background: var(--canvas, #f5f5f0);
+    border-radius: 8px;
+    font-size: 1.35rem;
+  }
+  
+  .product-search-result-image img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+  }
+  
+  .product-search-result-info {
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+    gap: 4px;
+    min-width: 0;
+  }
+  
+  .product-search-result-name {
+    color: #252a26;
+    font-size: 0.86rem;
+    font-weight: 700;
+    line-height: 1.4;
+    overflow-wrap: anywhere;
+  }
+  
+  .product-search-result-brand {
+    color: #777b74;
+    font-size: 0.76rem;
+  }
+  
+  .product-search-result-barcode {
+    color: #898b84;
+    font-family: "DM Mono", monospace;
+    font-size: 0.68rem;
+  }
+  
+  .product-search-result-arrow {
+    flex: 0 0 auto;
+    color: var(--brand, #164943);
+    font-size: 1.1rem;
+  }
+  
+  .product-search-loading,
+  .product-search-empty,
+  .product-search-error {
+    margin: 0;
+    padding: 13px 0;
+    color: #777b74;
+    font-size: 0.82rem;
+    line-height: 1.5;
+  }
+  
+  .product-search-error {
+    color: #a83232;
+  }
+  
+  /* Small screens */
+  
+  @media (max-width: 380px) {
+    .product-search-field {
+      gap: 7px;
+      padding-left: 11px;
+    }
+  
+    #product-search-submit {
+      padding: 0 11px;
+    }
+  }
+
+  .product-search-result {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+  }
+  
+  .product-search-open {
+    display: flex;
+    flex: 1 1 220px;
+    min-width: 0;
+    align-items: center;
+    gap: 12px;
+    padding: 12px;
+    border: 0;
+    background: transparent;
+    color: inherit;
+    font: inherit;
+    text-align: left;
+    cursor: pointer;
+  }
+  
+  .product-search-add {
+    flex: 0 0 auto;
+    margin: 0 12px 12px auto;
+    padding: 9px 12px;
+    border: 1px solid var(--brand, #164943);
+    border-radius: 8px;
+    background: var(--paper, #fffefa);
+    color: var(--brand, #164943);
+    font: inherit;
+    font-size: 0.8rem;
+    font-weight: 700;
+    cursor: pointer;
+  }
+  
+  .product-search-add:hover {
+    background: var(--brand, #164943);
+    color: white;
+  }
+  
+  .product-search-add:disabled {
+    opacity: 0.65;
+    cursor: default;
+  }
+  

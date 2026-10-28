@@ -1,0 +1,34 @@
+/* ==========================================================================
+     7. Nutrition
+     ========================================================================== */
+  
+     .nutrition-list {
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+      }
+      
+      .nutrition-row {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 15px;
+      
+        padding: 10px 12px;
+        border-radius: var(--radius-sm);
+      
+        background: var(--canvas);
+      }
+      
+      .nutrition-label {
+        color: var(--muted);
+        font-size: 12px;
+        font-weight: 600;
+      }
+      
+      .nutrition-value {
+        color: var(--brand);
+        font-family: 'DM Mono', monospace;
+        font-size: 12px;
+        font-weight: 700;
+      }

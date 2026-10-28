@@ -1,181 +1,89 @@
-// Application state.
-//
-// This file manages:
-// - Scan history
-// - Inventory
-//
-// Scan history and inventory are stored separately
-// in localStorage.
 
+/**
+ * Scanly — Application state
+ *
+ * Manages:
+ * - Scan history
+ * - Inventory and quantities
+ * - Shop tracking
+ * - Best-before dates
+ *
+ * Store names are shared with the store dropdown.
+ * Data is stored locally in localStorage.
+ */
+
+import { STORES } from './components/dropdowns/stores.js';
 
 // ==================================================
-// Storage keys
+// Storage keys and constants
 // ==================================================
 
 const HISTORY_KEY = 'scanly-history';
 const INVENTORY_KEY = 'scanly-inventory';
 
+const DAY_IN_MS = 24 * 60 * 60 * 1000;
+
+const ALLOWED_SHOPS = new Set([
+  '',
+  ...STORES
+]);
 
 // ==================================================
-// Scan history
+// Shared helpers
 // ==================================================
 
 /**
- * Loads scan history from localStorage.
+ * Reads and parses an array from localStorage.
+ * Returns an empty array if storage is unavailable
+ * or the stored value is invalid.
  */
-function loadHistory() {
+function loadArray(key) {
   try {
-    const savedHistory =
-      JSON.parse(
-        localStorage.getItem(HISTORY_KEY) || '[]'
-      );
+    const saved = localStorage.getItem(key);
 
-    if (!Array.isArray(savedHistory)) {
+    if (!saved) {
       return [];
     }
 
-    return savedHistory;
-  } catch {
+    const parsed = JSON.parse(saved);
+
+    return Array.isArray(parsed) ? parsed : [];
+  } catch (error) {
+    console.error(`Could not load ${key}:`, error);
     return [];
   }
 }
 
-
 /**
- * Products currently in scan history.
+ * Saves an array to localStorage.
+ * Returns true when the save succeeds.
  */
-export let scans = loadHistory();
-
-
-// --------------------------------------------------
-// Save history
-// --------------------------------------------------
-
-/**
- * Saves scan history to localStorage.
- */
-function saveHistory() {
-  localStorage.setItem(
-    HISTORY_KEY,
-    JSON.stringify(scans)
-  );
-}
-
-
-// --------------------------------------------------
-// Add to history
-// --------------------------------------------------
-
-/**
- * Adds a product to scan history.
- *
- * If the product has already been scanned,
- * its old history entry is replaced.
- */
-export function addToHistory(product) {
-  if (!product?.code) {
-    return;
-  }
-
-  scans = scans.filter(
-    item => item.code !== product.code
-  );
-
-  scans = [
-    {
-      ...product,
-      scannedAt: new Date().toISOString()
-    },
-    ...scans
-  ];
-
-  saveHistory();
-}
-
-
-// --------------------------------------------------
-// Clear history
-// --------------------------------------------------
-
-/**
- * Removes all scan history.
- */
-export function clearHistory() {
-  scans = [];
-
-  saveHistory();
-}
-
-
-// --------------------------------------------------
-// Scans this week
-// --------------------------------------------------
-
-/**
- * Counts scans from the last seven days.
- */
-export function scansThisWeek() {
-  const now = Date.now();
-
-  const sevenDaysAgo =
-    now - (7 * 24 * 60 * 60 * 1000);
-
-  return scans.filter(scan => {
-    if (!scan.scannedAt) {
-      return false;
-    }
-
-    const scannedTime =
-      new Date(scan.scannedAt).getTime();
-
-    return (
-      !Number.isNaN(scannedTime) &&
-      scannedTime >= sevenDaysAgo
-    );
-  }).length;
-}
-
-
-// ==================================================
-// Inventory
-// ==================================================
-
-/**
- * Loads inventory from localStorage.
- *
- * Older inventory items without a quantity
- * are automatically given quantity = 1.
- */
-function loadInventory() {
+function saveArray(key, items) {
   try {
-    const savedInventory =
-      JSON.parse(
-        localStorage.getItem(INVENTORY_KEY) || '[]'
-      );
-
-    if (!Array.isArray(savedInventory)) {
-      return [];
-    }
-
-    return savedInventory
-      .filter(item => item?.code)
-      .map(item => ({
-        ...item,
-        quantity: normaliseQuantity(item.quantity)
-      }));
-  } catch {
-    return [];
+    localStorage.setItem(key, JSON.stringify(items));
+    return true;
+  } catch (error) {
+    console.error(`Could not save ${key}:`, error);
+    return false;
   }
 }
 
+/**
+ * Normalises a product barcode/code.
+ */
+function normaliseCode(code) {
+  if (code === null || code === undefined) {
+    return '';
+  }
+
+  return String(code).trim();
+}
 
 /**
- * Makes sure a quantity is always
- * a valid positive number.
+ * Ensures inventory quantities are positive integers.
  */
 function normaliseQuantity(quantity) {
-  const number =
-    Number(quantity);
+  const number = Number(quantity);
 
   if (!Number.isFinite(number) || number < 1) {
     return 1;
@@ -184,30 +92,215 @@ function normaliseQuantity(quantity) {
   return Math.floor(number);
 }
 
-
 /**
- * Products currently in inventory.
- *
- * Each item contains a quantity.
+ * Validates a YYYY-MM-DD date without allowing
+ * impossible calendar dates.
  */
-export let inventoryItems =
-  loadInventory();
+function isValidDateString(date) {
+  if (typeof date !== 'string') {
+    return false;
+  }
 
+  const match = /^(\d{4})-(\d{2})-(\d{2})$/.exec(date);
 
-// --------------------------------------------------
-// Save inventory
-// --------------------------------------------------
+  if (!match) {
+    return false;
+  }
 
-/**
- * Saves inventory to localStorage.
- */
-function saveInventory() {
-  localStorage.setItem(
-    INVENTORY_KEY,
-    JSON.stringify(inventoryItems)
+  const year = Number(match[1]);
+  const month = Number(match[2]);
+  const day = Number(match[3]);
+
+  const parsed = new Date(year, month - 1, day);
+
+  return (
+    parsed.getFullYear() === year &&
+    parsed.getMonth() === month - 1 &&
+    parsed.getDate() === day
   );
 }
 
+/**
+ * Creates a local date at midnight from a validated
+ * YYYY-MM-DD string.
+ */
+function parseLocalDate(date) {
+  const [year, month, day] = date.split('-').map(Number);
+
+  return new Date(year, month - 1, day);
+}
+
+// ==================================================
+// Scan history
+// ==================================================
+
+function loadHistory() {
+  return loadArray(HISTORY_KEY).filter(
+    item =>
+      item &&
+      typeof item === 'object' &&
+      !Array.isArray(item) &&
+      normaliseCode(item.code) !== ''
+  );
+}
+
+/**
+ * Products currently in scan history.
+ */
+export let scans = loadHistory();
+
+/**
+ * Saves the current scan history.
+ */
+function saveHistory() {
+  return saveArray(HISTORY_KEY, scans);
+}
+
+/**
+ * Adds a product to scan history.
+ *
+ * A repeat scan moves the product to the top
+ * and updates its scan timestamp.
+ */
+export function addToHistory(product) {
+  if (!product || typeof product !== 'object') {
+    return;
+  }
+
+  const code = normaliseCode(product.code);
+
+  if (!code) {
+    return;
+  }
+
+  scans = [
+    {
+      ...product,
+      code,
+      scannedAt: new Date().toISOString()
+    },
+    ...scans.filter(
+      item => normaliseCode(item.code) !== code
+    )
+  ];
+
+  saveHistory();
+}
+
+/**
+ * Removes all scan history.
+ */
+export function clearHistory() {
+  scans = [];
+  saveHistory();
+}
+
+/**
+ * Counts scans made within the last seven days.
+ */
+export function scansThisWeek() {
+  const now = Date.now();
+  const cutoff = now - 7 * DAY_IN_MS;
+
+  return scans.filter(scan => {
+    if (!scan.scannedAt) {
+      return false;
+    }
+
+    const timestamp = new Date(scan.scannedAt).getTime();
+
+    return (
+      Number.isFinite(timestamp) &&
+      timestamp >= cutoff &&
+      timestamp <= now
+    );
+  }).length;
+}
+
+// ==================================================
+// Inventory loading
+// ==================================================
+
+function loadInventory() {
+  const items = loadArray(INVENTORY_KEY);
+  const seenCodes = new Set();
+
+  return items
+    .filter(item =>
+      item &&
+      typeof item === 'object' &&
+      !Array.isArray(item) &&
+      normaliseCode(item.code) !== ''
+    )
+    .map(item => ({
+      ...item,
+      code: normaliseCode(item.code),
+      quantity: normaliseQuantity(item.quantity),
+
+      // Keep only stores defined in the shared store list.
+      shop: ALLOWED_SHOPS.has(item.shop)
+        ? item.shop
+        : '',
+
+      bestBeforeDate:
+        typeof item.bestBeforeDate === 'string' &&
+        isValidDateString(item.bestBeforeDate)
+          ? item.bestBeforeDate
+          : ''
+    }))
+    .filter(item => {
+      if (seenCodes.has(item.code)) {
+        return false;
+      }
+
+      seenCodes.add(item.code);
+      return true;
+    });
+}
+
+/**
+ * Products currently in inventory.
+ */
+export let inventoryItems = loadInventory();
+
+/**
+ * Saves the current inventory.
+ */
+function saveInventory() {
+  return saveArray(INVENTORY_KEY, inventoryItems);
+}
+
+// ==================================================
+// Update inventory helper
+// ==================================================
+
+/**
+ * Updates one inventory item by barcode.
+ * The updater must return the updated item.
+ */
+function updateInventoryItem(code, updater) {
+  const targetCode = normaliseCode(code);
+
+  if (!targetCode) {
+    return;
+  }
+
+  const exists = inventoryItems.some(
+    item => item.code === targetCode
+  );
+
+  if (!exists) {
+    return;
+  }
+
+  inventoryItems = inventoryItems.map(item =>
+    item.code === targetCode
+      ? updater(item)
+      : item
+  );
+
+  saveInventory();
+}
 
 // ==================================================
 // Add to inventory
@@ -216,24 +309,26 @@ function saveInventory() {
 /**
  * Adds a product to inventory.
  *
- * If the product is already there,
- * its quantity increases by one.
- *
- * If it is not there, it is added
- * with a quantity of one.
+ * Existing products have their quantity increased.
+ * New products start with a quantity of one.
  */
 export function addToInventory(product) {
-  if (!product?.code) {
+  if (!product || typeof product !== 'object') {
     return;
   }
 
-  const existingItem =
-    inventoryItems.find(
-      item => item.code === product.code
-    );
+  const code = normaliseCode(product.code);
 
-  if (existingItem) {
-    increaseInventory(product.code);
+  if (!code) {
+    return;
+  }
+
+  const existing = inventoryItems.find(
+    item => item.code === code
+  );
+
+  if (existing) {
+    increaseInventory(code);
     return;
   }
 
@@ -241,180 +336,218 @@ export function addToInventory(product) {
     ...inventoryItems,
     {
       ...product,
-      quantity: 1
+      code,
+      quantity: 1,
+
+      shop: ALLOWED_SHOPS.has(product.shop)
+        ? product.shop
+        : '',
+
+      bestBeforeDate:
+        typeof product.bestBeforeDate === 'string' &&
+        isValidDateString(product.bestBeforeDate)
+          ? product.bestBeforeDate
+          : ''
     }
   ];
 
   saveInventory();
 }
 
-
 // ==================================================
-// Increase inventory
+// Increase and decrease quantities
 // ==================================================
 
 /**
- * Increases the quantity of an existing
- * inventory item by one.
- *
- * This is used by the + button.
+ * Increases an existing item's quantity by one.
  */
 export function increaseInventory(code) {
-  if (!code) {
-    return;
-  }
-
-  const exists =
-    inventoryItems.some(
-      item => item.code === code
-    );
-
-  if (!exists) {
-    return;
-  }
-
-  inventoryItems =
-    inventoryItems.map(item => {
-      if (item.code !== code) {
-        return item;
-      }
-
-      return {
-        ...item,
-        quantity:
-          normaliseQuantity(item.quantity) + 1
-      };
-    });
-
-  saveInventory();
+  updateInventoryItem(code, item => ({
+    ...item,
+    quantity: normaliseQuantity(item.quantity) + 1
+  }));
 }
-
-
-// ==================================================
-// Decrease inventory
-// ==================================================
 
 /**
- * Decreases the quantity of an inventory item
- * by one.
- *
- * When the quantity reaches zero,
- * the item is removed completely.
- *
- * This is used by the − button.
+ * Decreases an item's quantity by one.
+ * Removes the item when its quantity reaches zero.
  */
 export function decreaseInventory(code) {
-  if (!code) {
+  const targetCode = normaliseCode(code);
+
+  if (!targetCode) {
     return;
   }
 
-  inventoryItems =
-    inventoryItems
-      .map(item => {
-        if (item.code !== code) {
-          return item;
-        }
+  const existing = inventoryItems.find(
+    item => item.code === targetCode
+  );
 
-        return {
-          ...item,
-          quantity:
-            normaliseQuantity(item.quantity) - 1
-        };
-      })
-      .filter(
-        item => item.quantity > 0
-      );
+  if (!existing) {
+    return;
+  }
 
-  saveInventory();
+  const nextQuantity =
+    normaliseQuantity(existing.quantity) - 1;
+
+  if (nextQuantity <= 0) {
+    removeFromInventory(targetCode);
+    return;
+  }
+
+  updateInventoryItem(targetCode, item => ({
+    ...item,
+    quantity: nextQuantity
+  }));
 }
-
 
 // ==================================================
 // Remove from inventory
 // ==================================================
 
 /**
- * Removes a product completely from inventory.
- *
- * This removes all quantities of that product.
- *
- * This is used by the × button.
+ * Removes all quantities of a product from inventory.
  */
 export function removeFromInventory(code) {
-  if (!code) {
+  const targetCode = normaliseCode(code);
+
+  if (!targetCode) {
     return;
   }
 
-  inventoryItems =
-    inventoryItems.filter(
-      item => item.code !== code
-    );
+  const nextItems = inventoryItems.filter(
+    item => item.code !== targetCode
+  );
 
+  if (nextItems.length === inventoryItems.length) {
+    return;
+  }
+
+  inventoryItems = nextItems;
   saveInventory();
 }
 
-
 // ==================================================
-// Check inventory
+// Inventory lookup
 // ==================================================
 
 /**
- * Checks whether a product is currently
- * in the inventory.
+ * Checks whether a product is in inventory.
  */
 export function isInInventory(code) {
-  if (!code) {
+  const targetCode = normaliseCode(code);
+
+  if (!targetCode) {
     return false;
   }
 
   return inventoryItems.some(
-    item => item.code === code
+    item => item.code === targetCode
   );
 }
 
-
-// ==================================================
-// Get inventory item
-// ==================================================
-
 /**
- * Gets a specific inventory item by barcode.
- *
- * Returns undefined if the product isn't
- * currently in inventory.
+ * Returns an inventory item by barcode,
+ * or undefined if it is not found.
  */
 export function getInventoryItem(code) {
-  if (!code) {
+  const targetCode = normaliseCode(code);
+
+  if (!targetCode) {
     return undefined;
   }
 
   return inventoryItems.find(
-    item => item.code === code
+    item => item.code === targetCode
   );
 }
 
-
-// ==================================================
-// Inventory count
-// ==================================================
-
 /**
- * Returns the total number of physical
- * items in the inventory.
- *
- * Example:
- *
- * Toothpaste × 3
- * Shampoo × 2
- *
- * Returns 5.
+ * Returns the total number of physical items,
+ * including quantities.
  */
 export function inventoryCount() {
   return inventoryItems.reduce(
-    (total, item) => {
-      return total +
-        normaliseQuantity(item.quantity);
-    },
+    (total, item) =>
+      total + normaliseQuantity(item.quantity),
     0
   );
+}
+
+// ==================================================
+// Shop tracking
+// ==================================================
+
+/**
+ * Sets the shop for an inventory item.
+ * Pass an empty string to clear the shop.
+ */
+export function setInventoryShop(code, shop) {
+  if (
+    typeof shop !== 'string' ||
+    !ALLOWED_SHOPS.has(shop)
+  ) {
+    return;
+  }
+
+  updateInventoryItem(code, item => ({
+    ...item,
+    shop
+  }));
+}
+
+// ==================================================
+// Best-before and expiry tracking
+// ==================================================
+
+/**
+ * Sets or clears an item's best-before date.
+ *
+ * Accepts a valid YYYY-MM-DD date or an empty string.
+ */
+export function setBestBeforeDate(code, date) {
+  if (typeof date !== 'string') {
+    return;
+  }
+
+  if (date !== '' && !isValidDateString(date)) {
+    return;
+  }
+
+  updateInventoryItem(code, item => ({
+    ...item,
+    bestBeforeDate: date
+  }));
+}
+
+/**
+ * Returns an item's best-before status:
+ * - expired: the date has passed
+ * - soon: today or within the next seven days
+ * - fresh: more than seven days away
+ * - unknown: no valid date
+ */
+export function getBestBeforeStatus(date) {
+  if (!date || !isValidDateString(date)) {
+    return 'unknown';
+  }
+
+  const today = new Date();
+  today.setHours(0, 0, 0, 0);
+
+  const target = parseLocalDate(date);
+
+  const daysRemaining = Math.round(
+    (target.getTime() - today.getTime()) / DAY_IN_MS
+  );
+
+  if (daysRemaining < 0) {
+    return 'expired';
+  }
+
+  if (daysRemaining <= 7) {
+    return 'soon';
+  }
+
+  return 'fresh';
 }

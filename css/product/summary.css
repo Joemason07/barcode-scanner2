@@ -1,0 +1,42 @@
+/* ==========================================================================
+     3. Product summary
+     ========================================================================== */
+  
+     .product-summary {
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 8px;
+      
+        margin-top: 20px;
+      }
+      
+      .product-summary-item {
+        min-width: 0;
+        padding: 12px;
+      
+        border-radius: var(--radius-md);
+        background: var(--canvas);
+      }
+      
+      .product-summary-label {
+        display: block;
+        margin-bottom: 4px;
+      
+        color: var(--muted);
+        font-size: 9px;
+        font-weight: 800;
+      
+        text-transform: uppercase;
+        letter-spacing: 0.6px;
+      }
+      
+      .product-summary-value {
+        display: block;
+      
+        color: var(--brand);
+        font-family: 'DM Mono', monospace;
+        font-size: 14px;
+        font-weight: 700;
+      
+        overflow-wrap: anywhere;
+      }

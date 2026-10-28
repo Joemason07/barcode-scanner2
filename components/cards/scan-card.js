@@ -6,7 +6,7 @@
  * Styled to match the Inventory cards.
  */
 
-import { escapeHtml } from '../utils.js';
+import { escapeHtml } from '../../utils.js';
 
 export function scanCard(item) {
   const name = item.name || 'Unnamed product';

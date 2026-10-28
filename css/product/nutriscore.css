@@ -1,0 +1,249 @@
+/* Nutri-Score card */
+
+.nutriscore-card {
+    margin: 20px 0;
+    padding: 22px;
+    background: var(--paper, #fffefa);
+    border: 1px solid var(--line, #e5e5df);
+    border-radius: var(--radius-lg, 20px);
+    box-shadow: 0 4px 16px rgb(20 40 30 / 4%);
+  }
+  
+  .nutriscore-heading {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+  }
+  
+  .nutriscore-eyebrow {
+    display: block;
+    margin-bottom: 5px;
+    color: var(--muted, #747970);
+    font-size: 10px;
+    font-weight: 800;
+    letter-spacing: 1.5px;
+  }
+  
+  .nutriscore-heading h2 {
+    margin: 0;
+    color: var(--ink, #202820);
+    font-size: 23px;
+    font-weight: 800;
+    letter-spacing: -0.8px;
+  }
+  
+  .nutriscore-grade-large {
+    display: grid;
+    flex: 0 0 58px;
+    width: 58px;
+    height: 58px;
+    place-items: center;
+    border: 4px solid currentColor;
+    border-radius: 18px;
+    font-size: 32px;
+    font-weight: 900;
+    line-height: 1;
+  }
+  
+  .nutriscore-grade-a {
+    color: #038141;
+    background: #e6f4eb;
+  }
+  
+  .nutriscore-grade-b {
+    color: #579b2c;
+    background: #edf6e5;
+  }
+  
+  .nutriscore-grade-c {
+    color: #9b8000;
+    background: #fff7cf;
+  }
+  
+  .nutriscore-grade-d {
+    color: #c96900;
+    background: #fff0df;
+  }
+  
+  .nutriscore-grade-e {
+    color: #d73516;
+    background: #ffebe6;
+  }
+  
+  .nutriscore-description {
+    margin: 12px 0 20px;
+    color: var(--muted, #747970);
+    font-size: 13px;
+    line-height: 1.6;
+  }
+  
+  .nutriscore-scale {
+    display: flex;
+    align-items: stretch;
+    gap: 5px;
+  }
+  
+  .nutriscore-grade {
+    display: flex;
+    flex: 1;
+    min-width: 0;
+    min-height: 54px;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 3px;
+    padding: 8px 2px;
+    overflow: hidden;
+    border: 2px solid transparent;
+    border-radius: 10px;
+    background: var(--grade-colour);
+    color: #fff;
+    opacity: 0.55;
+    transition:
+      opacity 160ms ease,
+      transform 160ms ease,
+      border-color 160ms ease;
+  }
+  
+  .nutriscore-grade.is-active {
+    flex: 1.45;
+    border-color: var(--ink, #202820);
+    opacity: 1;
+    transform: translateY(-3px);
+    box-shadow: 0 4px 10px rgb(0 0 0 / 12%);
+  }
+  
+  .nutriscore-letter {
+    font-size: 23px;
+    font-weight: 900;
+    line-height: 1;
+  }
+  
+  .nutriscore-indicator {
+    max-width: 100%;
+    font-size: 8px;
+    font-weight: 800;
+    line-height: 1.2;
+    text-align: center;
+  }
+  
+  .nutriscore-score {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    margin-top: 20px;
+    padding-top: 16px;
+    border-top: 1px solid var(--line, #e5e5df);
+    color: var(--muted, #747970);
+    font-size: 13px;
+  }
+  
+  .nutriscore-score strong {
+    color: var(--ink, #202820);
+    font-family: 'DM Mono', monospace;
+    font-size: 20px;
+  }
+  
+  .nutriscore-footnote {
+    margin: 18px 0 0;
+    color: var(--muted, #747970);
+    font-size: 11px;
+    line-height: 1.6;
+  }
+  
+  @media (max-width: 420px) {
+    .nutriscore-card {
+      padding: 17px;
+    }
+  
+    .nutriscore-heading h2 {
+      font-size: 21px;
+    }
+  
+    .nutriscore-grade-large {
+      flex-basis: 52px;
+      width: 52px;
+      height: 52px;
+      border-radius: 15px;
+      font-size: 29px;
+    }
+  
+    .nutriscore-scale {
+      gap: 4px;
+    }
+  
+    .nutriscore-grade {
+      min-height: 48px;
+      padding: 7px 1px;
+      border-radius: 8px;
+    }
+  
+    .nutriscore-letter {
+      font-size: 20px;
+    }
+  
+    .nutriscore-indicator {
+      font-size: 7px;
+    }
+  }
+  
+  @media (prefers-reduced-motion: reduce) {
+    .nutriscore-grade {
+      transition: none;
+    }
+  }
+  
+  /* Nutri-Score numerical points scale */
+  
+  .nutriscore-points-scale {
+    margin-top: 16px;
+  }
+  
+  .nutriscore-points-track {
+    position: relative;
+    height: 10px;
+    border-radius: 999px;
+    background: linear-gradient(
+      to right,
+      #038141 0%,
+      #85bb2f 30%,
+      #fecb02 55%,
+      #ee8100 78%,
+      #e63e11 100%
+    );
+  }
+  
+  .nutriscore-points-marker {
+    position: absolute;
+    top: 50%;
+    left: var(--score-position);
+    width: 18px;
+    height: 18px;
+    border: 3px solid var(--paper, #fffefa);
+    border-radius: 50%;
+    background: var(--ink, #202820);
+    box-shadow: 0 1px 5px rgb(0 0 0 / 25%);
+    transform: translate(-50%, -50%);
+  }
+  
+  .nutriscore-points-labels,
+  .nutriscore-points-range {
+    display: flex;
+    justify-content: space-between;
+    gap: 8px;
+  }
+  
+  .nutriscore-points-labels {
+    margin-top: 12px;
+    color: var(--muted, #747970);
+    font-size: 10px;
+  }
+  
+  .nutriscore-points-range {
+    margin-top: 5px;
+    color: var(--muted, #747970);
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+  }

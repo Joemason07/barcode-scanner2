@@ -79,9 +79,13 @@ function getLegendAllergenKeys(product, text, warnings) {
 // ==================================================
 
 export function ingredients(product) {
-  const text = decodeEntities(
-    product.ingredients || ''
-  ).trim();
+  
+const text = decodeEntities(
+  product.ingredients || ''
+)
+  .replace(/_([^_]+)_/g, '$1')
+  .trim();
+
 
   if (!text) {
     return '';
@@ -327,7 +331,7 @@ function highlightAllergens(text, product = {}) {
 
 function extractWarnings(text) {
   const match = text.match(
-    /\bmay contain\s+(.+?)(?=,\s*\*\*|;\s*|$)/i
+    /\b(?:may contain|peut contenir|peuvent contenir)\s*:?\s*([\s\S]*?)(?=\)|[.;]|$)/i
   );
 
   if (!match) {
@@ -335,8 +339,7 @@ function extractWarnings(text) {
   }
 
   return match[1]
-    .replace(/[.;]+$/, '')
-    .split(/,|\band\b/i)
+    .split(/,|\band\b|\bet\b/i)
     .map(item => item.trim())
     .filter(
       item => item.length > 0 && item.length < 80
@@ -344,15 +347,21 @@ function extractWarnings(text) {
 }
 
 
+
+
 // ==================================================
 // Remove warning text from ingredients
 // ==================================================
 
+
 function removeWarnings(text) {
-  return text.replace(
-    /,?\s*may contain\s+(.+?)(?=,\s*\*\*|;\s*|$)/i,
-    ''
-  ).trim();
+  return text
+    .replace(
+      /\s*\(?\s*\b(?:may contain|peut contenir|peuvent contenir)\s*:?\s*[\s\S]*?(?:\)|(?=[.;]|$))/i,
+      ''
+    )
+    .replace(/\s+\./g, '.')
+    .trim();
 }
 
 
@@ -360,17 +369,24 @@ function removeWarnings(text) {
 // Remove obvious non-ingredient product copy
 // ==================================================
 
+
 function removeNonIngredientText(text) {
-  const marker = text.indexOf(
-    '**the equivalent of'
-  );
-
-  if (marker !== -1) {
-    return text.slice(0, marker).trim();
-  }
-
-  return text;
+  return text
+    // Remove trailing origin/manufacturing statements.
+    .replace(
+      /\s*\b(?:produced|made|manufactured)\s+in\s+[^.;]+[.;]?/gi,
+      ''
+    )
+    .replace(
+      /\s*\b(?:produit|fabriqué|élaboré)\s+en\s+[^.;]+[.;]?/gi,
+      ''
+    )
+    // Clean up duplicate punctuation left after removal.
+    .replace(/\.{2,}/g, '.')
+    .replace(/\s+([.,;])/g, '$1')
+    .trim();
 }
+
 
 
 // ==================================================

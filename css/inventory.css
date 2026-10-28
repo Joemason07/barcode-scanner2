@@ -349,3 +349,174 @@
       font-size: 12px;
     }
   }
+
+  .expiry-status-row {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+  
+  .expiry-days-pill {
+    display: inline-flex;
+    align-items: center;
+    width: fit-content;
+    padding: 4px 9px;
+    border-radius: 999px;
+    font-size: 0.72rem;
+    font-weight: 700;
+    white-space: nowrap;
+  }
+  
+  .expiry-days-pill--expired {
+    color: #c0392b;
+    background: rgb(192 57 43 / 10%);
+  }
+  
+  .expiry-days-pill--soon {
+    color: #a66a00;
+    background: rgb(166 106 0 / 12%);
+  }
+  
+  .expiry-days-pill--fresh {
+    color: #237a4b;
+    background: rgb(35 122 75 / 10%);
+  }
+
+
+/* Shop selection */
+
+.inventory-card-shop {
+  display: grid;
+  gap: 6px;
+  margin: 14px 0;
+}
+
+.inventory-card-shop label {
+  color: var(--muted, #666);
+  font-size: 0.75rem;
+  font-weight: 700;
+}
+
+.inventory-card-shop select {
+  width: 100%;
+  min-height: 42px;
+  padding: 10px 12px;
+  border: 1px solid var(--line, #e5e5df);
+  border-radius: 10px;
+  background: var(--paper, #fffefa);
+  color: inherit;
+  font: inherit;
+}
+
+
+/* ==================================================
+   Shop branding
+   ================================================== */
+
+   .shop-brand-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    width: fit-content;
+    max-width: 100%;
+    margin-top: 9px;
+    padding: 5px 9px 5px 5px;
+    border: 1px solid var(--line, #e5e5df);
+    border-radius: 9px;
+    background: var(--paper, #fffefa);
+    color: var(--text, #202520);
+    font-size: 0.75rem;
+    font-weight: 700;
+  }
+  
+  .shop-brand-logo {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 42px;
+    min-height: 27px;
+    padding: 3px 5px;
+    border-radius: 6px;
+    background: var(--shop-colour);
+    color: var(--shop-text);
+    font-size: 0.65rem;
+    font-weight: 800;
+    letter-spacing: -0.02em;
+    text-align: center;
+  }
+  
+  .shop-brand-name {
+    overflow-wrap: anywhere;
+  }
+  
+  /* Dark mode retains readable shop badges. */
+  .dark .shop-brand-badge {
+    background: var(--paper, #202520);
+    border-color: var(--line, #454843);
+    color: var(--text, #f5f5f0);
+  }
+  
+
+
+.inventory-shop-select {
+  border-left: 4px solid var(--shop-colour, var(--line, #e5e5df));
+  transition: border-color 150ms ease;
+}
+
+.inventory-shop-select:focus-visible {
+  outline: 2px solid var(--brand, #164943);
+  outline-offset: 2px;
+}
+
+
+/* Local supermarket logo images */
+
+.shop-brand-image {
+  display: block;
+  width: 44px;
+  height: 28px;
+  flex: 0 0 44px;
+  object-fit: contain;
+  border-radius: 4px;
+}
+
+.shop-brand-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  width: fit-content;
+  max-width: 100%;
+  margin-top: 9px;
+  padding: 5px 9px;
+  border: 1px solid var(--line, #e5e5df);
+  border-radius: 9px;
+  background: var(--paper, #fffefa);
+  color: var(--text, #202520);
+  font-size: 0.75rem;
+  font-weight: 700;
+}
+
+.shop-brand-logo {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 42px;
+  min-height: 27px;
+  padding: 3px 5px;
+  border-radius: 6px;
+  background: var(--shop-colour);
+  color: var(--shop-text);
+  font-size: 0.65rem;
+  font-weight: 800;
+}
+
+.shop-brand-name {
+  overflow-wrap: anywhere;
+}
+
+.dark .shop-brand-badge {
+  background: var(--paper, #202520);
+  border-color: var(--line, #454843);
+  color: var(--text, #f5f5f0);
+}

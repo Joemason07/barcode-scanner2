@@ -1,4 +1,0 @@
-project_id = "barcode-scanner"
-
-[functions.lookup-product]
-verify_jwt = false

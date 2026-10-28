@@ -1,9 +1,10 @@
-// Barcode scanner page.
-//
-// Displays the camera scanner and alternative
-// ways to enter a barcode.
 
-export function scan() {
+ // Barcode scanner page.
+ //
+ // Displays the camera scanner and alternative
+ // ways to find a product.
+
+ export function scan() {
   return `
     <section class="page scan-page">
 
@@ -59,6 +60,52 @@ export function scan() {
         </button>
 
       </div>
+
+      <div class="scan-divider">
+        <span>OR FIND A PRODUCT</span>
+      </div>
+
+      <section class="product-search">
+
+        <label for="product-search-input">
+          Search by product name
+        </label>
+
+        <form id="product-search-form">
+
+          <div class="product-search-field">
+
+            <span aria-hidden="true">⌕</span>
+
+            <input
+              id="product-search-input"
+              type="search"
+              placeholder="e.g. Tesco chicken breast"
+              autocomplete="off"
+              required
+            />
+
+            <button
+              type="submit"
+              id="product-search-submit"
+            >
+              Search
+            </button>
+
+          </div>
+
+        </form>
+
+        <p class="product-search-hint">
+          Find a product without scanning its barcode.
+        </p>
+
+        <div
+          id="product-search-results"
+          aria-live="polite"
+        ></div>
+
+      </section>
 
     </section>
   `;

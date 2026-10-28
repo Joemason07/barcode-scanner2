@@ -4,7 +4,7 @@
 // to the user's inventory.
 
 import { inventoryItems } from '../state.js';
-import { inventoryCard } from '../components/inventory-card.js';
+import { inventoryCard } from '../components/cards/inventory-card.js';
 
 export function inventory() {
   if (inventoryItems.length === 0) {
@@ -69,9 +69,9 @@ function emptyInventory() {
         <h2>Your inventory is empty</h2>
 
         <p>
-          Scan a barcode to add a product
-          to your inventory.
-        </p>
+        Search for a product or scan its barcode
+        to start building your inventory.
+      </p>
 
         <a
           class="button"

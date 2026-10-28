@@ -1,0 +1,33 @@
+/* ==========================================================================
+     8. Ingredients
+     ========================================================================== */
+  
+     .ingredients-list,
+     .ingredient-warning-list {
+       display: flex;
+       flex-direction: column;
+       gap: 0;
+     
+       margin: 0;
+       padding: 0;
+     
+       list-style: none;
+     }
+     
+     .ingredients-item {
+       padding: 10px 0;
+       border-bottom: 1px solid var(--line);
+     
+       color: var(--ink);
+       font-size: 13px;
+       line-height: 1.6;
+     }
+     
+     .ingredients-item:first-child {
+       padding-top: 0;
+     }
+     
+     .ingredients-item:last-child {
+       padding-bottom: 0;
+       border-bottom: 0;
+     }

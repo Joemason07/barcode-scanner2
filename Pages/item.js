@@ -23,7 +23,11 @@ import { ingredients } from '../components/product/ingredients.js';
 
 import { allergens } from '../components/product/allergens.js';
 
+import { traces } from '../components/product/traces.js';
+
 import { nutriScore } from '../components/product/nutriscore.js';
+
+import { storeLabel } from '../components/product/store-label.js';
 
 
 // ==================================================
@@ -56,35 +60,48 @@ export function loadingItem(code) {
 
 
 
+
 export function productItem(product) {
   return `
-    <a class="link" href="#history">
-      ← Back to history
-    </a>
+    <div class="product-detail-page">
 
-    ${productHeader(product)}
+      <a class="link product-back-link" href="#history">
+        ← Back to history
+      </a>
 
-    ${productHero(product)}
+      <div class="product-detail-header">
+        ${productHeader(product)}
+      </div>
 
-    ${productOverview(product)}
+      <div class="product-detail-image">
+        ${productHero(product)}
+      </div>
 
-    ${inventoryButton(product)}
+      <div class="product-detail-overview">
+        ${productOverview(product)}
+        ${storeLabel(product)}
+        ${inventoryButton(product)}
+      </div>
 
-    ${trafficLights(product.traffic)}
+      <div class="product-detail-nutrition">
+        ${trafficLights(product.traffic)}
+        ${nutriScore(product)}
+        ${nutrition(product)}
+      </div>
 
-    ${nutriScore(product)}
+      <div class="product-detail-information">
+        ${productInformation(product)}
+        ${ingredients(product)}
+        ${allergens(product)}
+        ${traces(product)}
+      </div>
 
-    ${nutrition(product)}
+      ${productDataNote()}
 
-    ${productInformation(product)}
-
-    ${ingredients(product)}
-
-    ${allergens(product)}
-
-    ${productDataNote()}
+    </div>
   `;
 }
+
 
 
 

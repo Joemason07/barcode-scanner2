@@ -5,102 +5,95 @@
  * Used by the ingredient list and allergen summary.
  */
 
+
 export const ALLERGENS = {
-    gluten: {
-      label: 'Gluten',
-      terms: [
-        'semolina',
-        'wheat',
-        'wheat flour',
-        'durum wheat',
-        'barley',
-        'rye',
-        'spelt',
-        'oats'
-      ]
-    },
-  
-    nuts: {
-      label: 'Nuts',
-      terms: [
-        'cashew nut',
-        'cashew nuts',
-        'almond',
-        'almonds',
-        'hazelnut',
-        'hazelnuts',
-        'walnut',
-        'walnuts',
-        'pistachio',
-        'pistachios',
-        'pecan',
-        'pecans',
-        'macadamia',
-        'brazil nut',
-        'brazil nuts'
-      ]
-    },
-  
-    milk: {
-      label: 'Milk',
-      terms: ['milk', 'whey', 'casein', 'cream', 'cheese']
-    },
-  
-    eggs: {
-      label: 'Eggs',
-      terms: ['egg', 'eggs', 'egg white', 'egg yolk']
-    },
-  
-    mustard: {
-      label: 'Mustard',
-      terms: ['mustard']
-    },
-  
-    peanuts: {
-      label: 'Peanuts',
-      terms: ['peanut', 'peanuts']
-    },
-  
-    soybeans: {
-      label: 'Soy',
-      terms: ['soy', 'soya', 'soybean', 'soybeans']
-    },
-  
-    sesame: {
-      label: 'Sesame',
-      terms: ['sesame', 'sesame seeds']
-    },
-  
-    celery: {
-      label: 'Celery',
-      terms: ['celery']
-    },
-  
-    fish: {
-      label: 'Fish',
-      terms: ['fish', 'salmon', 'tuna', 'cod', 'anchovy']
-    },
-  
-    crustaceans: {
-      label: 'Crustaceans',
-      terms: ['prawn', 'prawns', 'shrimp', 'crab', 'lobster']
-    },
-  
-    molluscs: {
-      label: 'Molluscs',
-      terms: ['mussel', 'mussels', 'oyster', 'oysters', 'squid']
-    },
-  
-    lupin: {
-      label: 'Lupin',
-      terms: ['lupin']
-    },
-  
-    sulphites: {
-      label: 'Sulphites',
-      terms: ['sulphites', 'sulfites']
-    }
-  };
+  gluten: {
+    label: 'Gluten',
+    terms: [
+      'semolina', 'wheat', 'wheat flour', 'durum wheat',
+      'barley', 'rye', 'spelt', 'oats',
+      'blé', 'farine de blé', 'orge', 'seigle',
+      'avoine', 'épeautre'
+    ]
+  },
+
+  nuts: {
+    label: 'Nuts',
+    terms: [
+      'cashew nut', 'cashew nuts', 'almond', 'almonds',
+      'hazelnut', 'hazelnuts', 'walnut', 'walnuts',
+      'pistachio', 'pistachios', 'pecan', 'pecans',
+      'macadamia', 'brazil nut', 'brazil nuts',
+      'amande', 'amandes', 'noisette', 'noisettes',
+      'noix', 'pistache', 'pistaches', 'noix de cajou'
+    ]
+  },
+
+  milk: {
+    label: 'Milk',
+    terms: [
+      'milk', 'whey', 'casein', 'cream', 'cheese',
+      'lait', 'petit-lait', 'caséine', 'crème',
+      'fromage', 'beurre', 'lactose'
+    ]
+  },
+
+  eggs: {
+    label: 'Eggs',
+    terms: ['egg', 'eggs', 'egg white', 'egg yolk', 'œuf', 'œufs', 'oeuf', 'oeufs']
+  },
+
+  mustard: {
+    label: 'Mustard',
+    terms: ['mustard', 'moutarde']
+  },
+
+  peanuts: {
+    label: 'Peanuts',
+    terms: ['peanut', 'peanuts', 'cacahuète', 'cacahuètes', 'arachide', 'arachides']
+  },
+
+  soybeans: {
+    label: 'Soy',
+    terms: ['soy', 'soya', 'soybean', 'soybeans', 'soja', 'lécithine de soja']
+  },
+
+  sesame: {
+    label: 'Sesame',
+    terms: ['sesame', 'sesame seeds', 'sésame', 'graines de sésame']
+  },
+
+  celery: {
+    label: 'Celery',
+    terms: ['celery', 'céleri', 'céleri-rave']
+  },
+
+  fish: {
+    label: 'Fish',
+    terms: ['fish', 'salmon', 'tuna', 'cod', 'anchovy', 'poisson', 'saumon', 'thon', 'morue', 'anchois']
+  },
+
+  crustaceans: {
+    label: 'Crustaceans',
+    terms: ['prawn', 'prawns', 'shrimp', 'crab', 'lobster', 'crevette', 'crevettes', 'crabe', 'homard']
+  },
+
+  molluscs: {
+    label: 'Molluscs',
+    terms: ['mussel', 'mussels', 'oyster', 'oysters', 'squid', 'moule', 'moules', 'huître', 'huîtres', 'calamar', 'poulpe']
+  },
+
+  lupin: {
+    label: 'Lupin',
+    terms: ['lupin', 'lupine']
+  },
+
+  sulphites: {
+    label: 'Sulphites',
+    terms: ['sulphites', 'sulfites', 'sulfite', 'sulphite', 'dioxyde de soufre']
+  }
+};
+
   
   
   // Normalise Open Food Facts tags such as en:gluten.

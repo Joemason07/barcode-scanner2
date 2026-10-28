@@ -7,19 +7,17 @@
    1. Traffic light section
    ========================================================================== */
 
-   .traffic-section {
-    margin-top: 18px;
   
-    padding: 20px;
-  
-    border: 1px solid var(--line);
-    border-radius: var(--radius-lg);
-  
-    background: var(--paper);
-  
-    box-shadow: var(--shadow);
-  }
-  
+.traffic-section {
+  margin: 0;
+  padding: 18px;
+
+  border: 1px solid var(--line);
+  border-radius: var(--radius-lg);
+
+  background: var(--paper);
+  box-shadow: var(--shadow);
+}
   
   /* ==========================================================================
      2. Section heading

@@ -15,7 +15,7 @@ import { app } from './dom.js';
 
 import { stopCamera } from './camera.js';
 
-import { bindPageEvents } from './events.js';
+import { bindPageEvents } from './events/events.js';
 
 import { updateNavigation } from './components/navigation.js';
 

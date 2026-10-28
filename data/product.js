@@ -54,11 +54,11 @@ export function createProduct(data = {}, fallbackCode = '') {
       salt: data.salt_100g ?? null
     },
 
-    // Nutri-Score
-    grade:
-      data.nutriscore_grade ||
-      data.nutrition_grade ||
-      '',
+    /// Nutri-Score
+      grade: normalizeNutriScoreGrade(
+        data.nutriscore_grade ||
+        data.nutrition_grade
+      ),
     nutriscoreScore: data.nutriscore_score ?? null,
     nutriscoreData: data.nutriscore_data ?? null,
     nutriscoreVersion: data.nutriscore_version || '',
@@ -111,4 +111,20 @@ export function createProduct(data = {}, fallbackCode = '') {
     lastModifiedAt: data.last_modified_t ?? null,
     lastUpdatedAt: data.last_updated_t ?? null
   };
+
+  // ==================================================
+// Nutri-Score validation
+// ==================================================
+
+function normalizeNutriScoreGrade(value) {
+  if (typeof value !== 'string') {
+    return '';
+  }
+
+  const grade = value.trim().toLowerCase();
+
+  return ['a', 'b', 'c', 'd', 'e'].includes(grade)
+    ? grade
+    : '';
+}
 }

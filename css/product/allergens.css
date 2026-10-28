@@ -1,0 +1,175 @@
+/* ==========================================================================
+     9. Ingredient allergen highlights
+     ========================================================================== */
+  
+     .ingredient-allergen,
+     .allergen-chip {
+       display: inline;
+       padding: 2px 5px;
+       border-radius: 5px;
+     
+       font-weight: 750;
+     
+       -webkit-box-decoration-break: clone;
+       box-decoration-break: clone;
+     }
+     
+     /* Gluten */
+     .ingredient-allergen--gluten,
+     .allergen-chip--gluten {
+       background: #FCE4E4;
+       color: #912F35;
+     }
+     
+     /* Nuts */
+     .ingredient-allergen--nuts,
+     .allergen-chip--nuts {
+       background: #FCECCF;
+       color: #80510B;
+     }
+     
+     /* Milk */
+     .ingredient-allergen--milk,
+     .allergen-chip--milk {
+       background: #DDEBFA;
+       color: #204F83;
+     }
+     
+     /* Eggs */
+     .ingredient-allergen--eggs,
+     .allergen-chip--eggs {
+       background: #F9E1EC;
+       color: #862D55;
+     }
+     
+     /* Mustard */
+     .ingredient-allergen--mustard,
+     .allergen-chip--mustard {
+       background: #EDE4FA;
+       color: #5B3688;
+     }
+     
+     /* Peanuts */
+     .ingredient-allergen--peanuts,
+     .allergen-chip--peanuts {
+       background: #FBE4D5;
+       color: #8A421B;
+     }
+     
+     /* Soy */
+     .ingredient-allergen--soybeans,
+     .allergen-chip--soybeans {
+       background: #DDF3E5;
+       color: #236640;
+     }
+     
+     /* Sesame */
+     .ingredient-allergen--sesame,
+     .allergen-chip--sesame {
+       background: #F7F0C8;
+       color: #65520B;
+     }
+     
+     /* Celery */
+     .ingredient-allergen--celery,
+     .allergen-chip--celery {
+       background: #D8F0EE;
+       color: #155D59;
+     }
+     
+     /* Fish */
+     .ingredient-allergen--fish,
+     .allergen-chip--fish {
+       background: #DCEFFA;
+       color: #205675;
+     }
+     
+     /* Crustaceans */
+     .ingredient-allergen--crustaceans,
+     .allergen-chip--crustaceans {
+       background: #FADDD7;
+       color: #8C3328;
+     }
+     
+     /* Molluscs */
+     .ingredient-allergen--molluscs,
+     .allergen-chip--molluscs {
+       background: #E9E1F7;
+       color: #533B83;
+     }
+     
+     /* Lupin */
+     .ingredient-allergen--lupin,
+     .allergen-chip--lupin {
+       background: #E6F0D5;
+       color: #476325;
+     }
+     
+     /* Sulphites */
+     .ingredient-allergen--sulphites,
+     .allergen-chip--sulphites {
+       background: #E7E8EB;
+       color: #444957;
+     }
+     
+     /* Unknown allergen */
+     .ingredient-allergen--unknown {
+       background: #F5D8C9;
+       color: #7B2E20;
+     }
+     
+     
+     /* ==========================================================================
+        10. Allergen summary and legend
+        ========================================================================== */
+     
+     .allergen-chip {
+       display: inline-block;
+       font-size: 12px;
+       line-height: 1.5;
+     }
+     
+     .allergen-list {
+       display: flex;
+       flex-wrap: wrap;
+       gap: 8px;
+     
+       margin: 0;
+       padding: 0;
+     
+       list-style: none;
+     }
+     
+     .allergen-item {
+       margin: 0;
+     }
+     
+     .allergen-legend {
+       margin: 0 0 16px;
+     }
+     
+     .allergen-legend-title {
+       display: block;
+       margin-bottom: 8px;
+     
+       color: var(--muted, #686b65);
+       font-size: 0.75rem;
+       font-weight: 600;
+     }
+     
+     .allergen-legend-list {
+       display: flex;
+       flex-wrap: wrap;
+       gap: 6px;
+     
+       margin: 0;
+       padding: 0;
+     
+       list-style: none;
+     }
+     
+     .allergen-legend-list li {
+       margin: 0;
+       padding: 0;
+     }
+      

@@ -1,0 +1,52 @@
+
+.inventory-card-expiry {
+    display: grid;
+    gap: 8px;
+    padding: 14px 16px;
+    border-top: 1px solid var(--line, #e5e5df);
+  }
+  
+  .inventory-card-expiry label {
+    font-size: 0.8rem;
+    font-weight: 700;
+  }
+  
+  .inventory-card-expiry input {
+    width: 100%;
+    min-width: 0;
+    padding: 10px 12px;
+    border: 1px solid var(--line, #e5e5df);
+    border-radius: 10px;
+    background: var(--paper, #fffefa);
+    color: inherit;
+    font: inherit;
+  }
+  
+  .expiry-status {
+    width: fit-content;
+    padding: 4px 9px;
+    border-radius: 999px;
+    font-size: 0.75rem;
+    font-weight: 700;
+  }
+  
+  .expiry-status--expired {
+    color: #a12626;
+    background: #fbe6e4;
+  }
+  
+  .expiry-status--soon {
+    color: #805600;
+    background: #fff0c2;
+  }
+  
+  .expiry-status--fresh {
+    color: #23653d;
+    background: #e1f3e5;
+  }
+  
+  .expiry-status--unknown {
+    color: var(--muted, #777);
+    background: #eeeee9;
+  }
+  

@@ -19,11 +19,7 @@ export function productOverview(product) {
       label: 'What is it?',
       value: product.genericName
     },
-    {
-      label: 'Product type',
-      value: product.type
-    },
-    {
+      {
       label: 'Quantity',
       value: formatQuantity(product)
     },
@@ -33,7 +29,7 @@ export function productOverview(product) {
     },
     {
       label: 'Food groups',
-      value: product.foodGroups
+      value: formatFoodGroups(product.foodGroups)
     },
     {
       label: 'Countries',
@@ -77,6 +73,7 @@ export function productOverview(product) {
 // Quantity
 // ==================================================
 
+
 function formatQuantity(product) {
   const quantity = product.quantity;
 
@@ -87,14 +84,39 @@ function formatQuantity(product) {
     return '';
   }
 
-  const unit = product.quantityUnit;
+  const value = String(quantity).trim();
 
+  // Reject common placeholder or invalid values.
   if (
-    unit == null ||
-    String(unit).trim() === ''
+    /^(unknown|undefined|null|n\/a)$/i.test(value) ||
+    /^1\s*gram$/i.test(value)
   ) {
-    return String(quantity).trim();
+    return '';
   }
 
-  return `${String(quantity).trim()} ${String(unit).trim()}`;
+  // PostgreSQL quantity is currently returned as a
+  // complete string, e.g. "400 g" or "1 kg".
+  return value;
+}
+
+
+function formatFoodGroups(value) {
+  if (!value || typeof value !== 'string') {
+    return '';
+  }
+
+  return value
+    .split(',')
+    .map(group => {
+      return group
+        .trim()
+        .replace(/^[a-z]{2,3}:/i, '')
+        .replace(/-/g, ' ')
+        .replace(/\s+/g, ' ');
+    })
+    .filter(Boolean)
+    .map(group => {
+      return group.charAt(0).toUpperCase() + group.slice(1);
+    })
+    .join(', ');
 }
