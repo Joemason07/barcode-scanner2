@@ -1,18 +1,19 @@
-// Scanly configuration.
-//
-// lookupEndpoint:
-// Optional URL for the product lookup API.
-//
-// Leave this empty to use the local Scanly API:
-// http://localhost:8001/api/product
-//
-// If you deploy the API somewhere else, put its
-// base URL here instead.
-//
-// This value is safe to expose in the browser.
-// Never put database passwords, API secrets,
-// or service-role keys in this file.
+
+/**
+ * Scanly configuration.
+ *
+ * dataSource:
+ * 'demo' = use local demo-products.js catalogue
+ * 'api'  = use the local Scanly API
+ *
+ * lookupEndpoint:
+ * Optional URL for the product lookup API.
+ *
+ * Leave empty to use the default local API:
+ * http://localhost:8001/api/product
+ */
 
 window.SCANLY_CONFIG = {
+  dataSource: 'demo',
   lookupEndpoint: '',
 };
