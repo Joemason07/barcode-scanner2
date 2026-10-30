@@ -10,25 +10,17 @@
  */
 
 import { escapeHtml } from '../utils.js';
-
 import { isInInventory } from '../state.js';
 
-import { trafficLights } from '../components/traffic-lights.js';
-
+import { trafficLights } from '../components/product/traffic-lights.js';
 import { productOverview } from '../components/product/product-overview.js';
-
 import { nutrition } from '../components/product/nutrition.js';
-
 import { ingredients } from '../components/product/ingredients.js';
-
 import { allergens } from '../components/product/allergens.js';
-
 import { traces } from '../components/product/traces.js';
-
 import { nutriScore } from '../components/product/nutriscore.js';
-
-import { storeLabel } from '../components/product/store-label.js';
-
+import { packSizePill } from '../components/pills/pack-size.js';
+import { shopBadge } from '../components/pills/shop-brand.js';
 
 // ==================================================
 // Loading state
@@ -53,13 +45,9 @@ export function loadingItem(code) {
   `;
 }
 
-
 // ==================================================
 // Product details
 // ==================================================
-
-
-
 
 export function productItem(product) {
   return `
@@ -79,7 +67,7 @@ export function productItem(product) {
 
       <div class="product-detail-overview">
         ${productOverview(product)}
-        ${storeLabel(product)}
+        ${shopBadge(product.stores?.trim())}
         ${inventoryButton(product)}
       </div>
 
@@ -102,9 +90,6 @@ export function productItem(product) {
   `;
 }
 
-
-
-
 // ==================================================
 // Product hero
 // ==================================================
@@ -117,7 +102,7 @@ function productHero(product) {
           ? `
             <img
               src="${escapeHtml(product.image)}"
-              alt="${escapeHtml(product.name)}"
+              alt="${escapeHtml(product.name || 'Product image')}"
               loading="lazy"
             />
           `
@@ -129,11 +114,10 @@ function productHero(product) {
   `;
 }
 
-
 // ==================================================
 // Product header
 // ==================================================
-
+     
 function productHeader(product) {
   return `
     <section class="page-intro">
@@ -148,6 +132,8 @@ function productHeader(product) {
       <p>
         ${escapeHtml(product.brand || 'Brand not listed')}
       </p>
+
+      ${packSizePill(product.packSize)}
     </section>
 
     <div class="detail-code">
@@ -195,7 +181,6 @@ function inventoryButton(product) {
   `;
 }
 
-
 // ==================================================
 // Product information
 // ==================================================
@@ -236,7 +221,6 @@ function productInformation(product) {
   `;
 }
 
-
 // ==================================================
 // Product data note
 // ==================================================
@@ -253,7 +237,6 @@ function productDataNote() {
     </p>
   `;
 }
-
 
 // ==================================================
 // Missing product
@@ -290,7 +273,6 @@ export function missingItem(code) {
     </div>
   `;
 }
-
 
 // ==================================================
 // Lookup error

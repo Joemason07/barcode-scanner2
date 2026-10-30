@@ -7,6 +7,7 @@
  */
 
 import { escapeHtml } from '../../utils.js';
+import { packSizePill } from '../pills/pack-size.js';
 
 export function scanCard(item) {
   const name = item.name || 'Unnamed product';
@@ -57,9 +58,11 @@ export function scanCard(item) {
               : ''
           }
 
-          <h2 class="scan-card-name">
+              <h2 class="scan-card-name">
             ${escapeHtml(name)}
           </h2>
+
+          ${packSizePill(item.packSize)}
 
           <span class="scan-card-code">
             ${escapeHtml(code)}

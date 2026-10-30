@@ -1,3 +1,4 @@
+
 /* ==========================================================================
    Scanly — Inventory
    ========================================================================== */
@@ -14,7 +15,6 @@
   .inventory-list {
     display: flex;
     flex-direction: column;
-  
     gap: 14px;
   }
   
@@ -26,18 +26,13 @@
   .inventory-card {
     display: flex;
     flex-direction: column;
-  
     overflow: hidden;
-  
     background: var(--paper);
-  
     border: 1px solid rgba(22, 73, 67, 0.08);
     border-radius: var(--radius-xl);
-  
     box-shadow:
       0 2px 6px rgba(0, 0, 0, 0.03),
       0 10px 30px rgba(22, 73, 67, 0.05);
-  
     transition:
       transform 0.2s ease,
       box-shadow 0.2s ease;
@@ -45,7 +40,6 @@
   
   .inventory-card:hover {
     transform: translateY(-2px);
-  
     box-shadow:
       0 4px 10px rgba(0, 0, 0, 0.04),
       0 14px 35px rgba(22, 73, 67, 0.08);
@@ -59,11 +53,8 @@
   .inventory-card-link {
     display: flex;
     align-items: center;
-  
     gap: 16px;
-  
     padding: 16px;
-  
     color: inherit;
     text-decoration: none;
   }
@@ -75,31 +66,22 @@
   
   .inventory-card-image {
     flex: 0 0 82px;
-  
     width: 82px;
     height: 82px;
-  
     display: flex;
     align-items: center;
     justify-content: center;
-  
     overflow: hidden;
-  
     background: var(--canvas);
-  
     border-radius: var(--radius-md);
   }
   
   .inventory-card-image img {
     width: 100%;
     height: 100%;
-  
     object-fit: contain;
-  
     padding: 8px;
-  
-    transition:
-      transform 0.25s ease;
+    transition: transform 0.25s ease;
   }
   
   .inventory-card:hover .inventory-card-image img {
@@ -109,13 +91,10 @@
   .inventory-card-placeholder {
     width: 100%;
     height: 100%;
-  
     display: flex;
     align-items: center;
     justify-content: center;
-  
     color: var(--brand);
-  
     font-size: 28px;
   }
   
@@ -126,54 +105,37 @@
   
   .inventory-card-content {
     min-width: 0;
-  
     flex: 1;
   }
   
   .inventory-card-brand {
     margin: 0 0 3px;
-  
     color: var(--brand);
-  
     font-size: 12px;
     font-weight: 600;
-  
     text-transform: uppercase;
     letter-spacing: 0.06em;
   }
   
   .inventory-card-name {
     display: -webkit-box;
-  
     overflow: hidden;
-  
     margin: 0;
-  
     color: var(--brand);
-  
     font-size: 16px;
     line-height: 1.3;
     font-weight: 700;
-  
     -webkit-line-clamp: 2;
     -webkit-box-orient: vertical;
   }
   
   .inventory-card-code {
     display: block;
-  
     margin-top: 6px;
-  
     overflow: hidden;
-  
     color: var(--muted);
-  
-    font-family:
-      'DM Mono',
-      monospace;
-  
+    font-family: 'DM Mono', monospace;
     font-size: 11px;
-  
     text-overflow: ellipsis;
     white-space: nowrap;
   }
@@ -186,21 +148,15 @@
   .inventory-card-footer {
     display: flex;
     align-items: center;
-  
     min-height: 58px;
-  
     padding: 10px 14px;
-  
     border-top: 1px solid rgba(22, 73, 67, 0.07);
-  
     background: rgba(245, 245, 240, 0.55);
   }
   
   .inventory-card-quantity-label {
     margin-right: auto;
-  
     color: var(--muted);
-  
     font-size: 13px;
     font-weight: 600;
   }
@@ -213,38 +169,27 @@
   .inventory-card-controls {
     display: flex;
     align-items: center;
-  
     gap: 5px;
-  
     padding: 3px;
-  
     border: 1px solid rgba(22, 73, 67, 0.1);
     border-radius: var(--radius-md);
-  
     background: var(--paper);
   }
   
   .inventory-card-button {
     width: 32px;
     height: 32px;
-  
     display: flex;
     align-items: center;
     justify-content: center;
-  
     padding: 0;
-  
     border: 0;
     border-radius: var(--radius-sm);
-  
     background: transparent;
     color: var(--brand);
-  
     font-size: 20px;
     font-weight: 500;
-  
     cursor: pointer;
-  
     transition:
       background 0.15s ease,
       transform 0.15s ease;
@@ -260,16 +205,10 @@
   
   .inventory-card-quantity {
     min-width: 28px;
-  
     color: var(--brand);
-  
-    font-family:
-      'DM Mono',
-      monospace;
-  
+    font-family: 'DM Mono', monospace;
     font-size: 14px;
     font-weight: 700;
-  
     text-align: center;
   }
   
@@ -281,25 +220,18 @@
   .inventory-card-remove {
     width: 34px;
     height: 34px;
-  
     display: flex;
     align-items: center;
     justify-content: center;
-  
     margin-left: 8px;
     padding: 0;
-  
     border: 0;
     border-radius: 50%;
-  
     background: transparent;
     color: var(--muted);
-  
     font-size: 20px;
     font-weight: 400;
-  
     cursor: pointer;
-  
     transition:
       background 0.15s ease,
       color 0.15s ease;
@@ -312,44 +244,9 @@
   
   
   /* ==========================================================================
-     9. Mobile
+     9. Expiry status
      ========================================================================== */
   
-  @media (max-width: 480px) {
-    .inventory-card {
-      border-radius: var(--radius-lg);
-    }
-  
-    .inventory-card-link {
-      gap: 12px;
-  
-      padding: 12px;
-    }
-  
-    .inventory-card-image {
-      flex-basis: 68px;
-  
-      width: 68px;
-      height: 68px;
-  
-      border-radius: var(--radius-md);
-    }
-  
-    .inventory-card-name {
-      font-size: 15px;
-    }
-  
-    .inventory-card-footer {
-      min-height: 54px;
-  
-      padding: 8px 10px;
-    }
-  
-    .inventory-card-quantity-label {
-      font-size: 12px;
-    }
-  }
-
   .expiry-status-row {
     display: flex;
     align-items: center;
@@ -382,46 +279,59 @@
     color: #237a4b;
     background: rgb(35 122 75 / 10%);
   }
-
-
-/* Shop selection */
-
-.inventory-card-shop {
-  display: grid;
-  gap: 6px;
-  margin: 14px 0;
-}
-
-.inventory-card-shop label {
-  color: var(--muted, #666);
-  font-size: 0.75rem;
-  font-weight: 700;
-}
-
-.inventory-card-shop select {
-  width: 100%;
-  min-height: 42px;
-  padding: 10px 12px;
-  border: 1px solid var(--line, #e5e5df);
-  border-radius: 10px;
-  background: var(--paper, #fffefa);
-  color: inherit;
-  font: inherit;
-}
-
-
-/* ==================================================
-   Shop branding
-   ================================================== */
-
-   .shop-brand-badge {
+  
+  
+  /* ==========================================================================
+     10. Shop selection
+     ========================================================================== */
+  
+  .inventory-card-shop {
+    display: grid;
+    gap: 6px;
+    margin: 14px 0;
+  }
+  
+  .inventory-card-shop label {
+    color: var(--muted, #666);
+    font-size: 0.75rem;
+    font-weight: 700;
+  }
+  
+  .inventory-card-shop select {
+    width: 100%;
+    min-height: 42px;
+    padding: 10px 12px;
+    border: 1px solid var(--line, #e5e5df);
+    border-radius: 10px;
+    background: var(--paper, #fffefa);
+    color: inherit;
+    font: inherit;
+  }
+  
+  .inventory-shop-select {
+    border-left: 4px solid var(--shop-colour, var(--line, #e5e5df));
+    transition: border-color 150ms ease;
+  }
+  
+  .inventory-shop-select:focus-visible {
+    outline: 2px solid var(--brand, #164943);
+    outline-offset: 2px;
+  }
+  
+  
+  /* ==========================================================================
+     11. Shop branding
+     ========================================================================== */
+  
+  .shop-brand-badge {
     display: inline-flex;
     align-items: center;
+    justify-content: center;
     gap: 8px;
     width: fit-content;
     max-width: 100%;
     margin-top: 9px;
-    padding: 5px 9px 5px 5px;
+    padding: 5px;
     border: 1px solid var(--line, #e5e5df);
     border-radius: 9px;
     background: var(--paper, #fffefa);
@@ -430,93 +340,248 @@
     font-weight: 700;
   }
   
+  /* Supermarket logo image */
+  
+  .shop-brand-image {
+    display: block;
+    width: 44px;
+    height: 28px;
+    flex: 0 0 44px;
+    object-fit: contain;
+    border-radius: 4px;
+  }
+  
+  /* Text fallback for missing logos and unknown stores */
+  
   .shop-brand-logo {
     display: inline-flex;
     align-items: center;
     justify-content: center;
     min-width: 42px;
     min-height: 27px;
-    padding: 3px 5px;
+    padding: 3px 8px;
     border-radius: 6px;
-    background: var(--shop-colour);
-    color: var(--shop-text);
-    font-size: 0.65rem;
-    font-weight: 800;
-    letter-spacing: -0.02em;
+    background: var(--shop-colour, #666666);
+    color: var(--shop-text, #FFFFFF);
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: normal;
     text-align: center;
+    overflow-wrap: anywhere;
+  }
+  
+  /* Never display fallback text while its hidden attribute is present. */
+  .shop-brand-logo[hidden] {
+    display: none !important;
   }
   
   .shop-brand-name {
     overflow-wrap: anywhere;
   }
   
-  /* Dark mode retains readable shop badges. */
+  /* Dark mode */
+  
   .dark .shop-brand-badge {
     background: var(--paper, #202520);
     border-color: var(--line, #454843);
     color: var(--text, #f5f5f0);
   }
   
+  
+  /* ==========================================================================
+     12. Mobile
+     ========================================================================== */
+  
+  @media (max-width: 480px) {
+    .inventory-card {
+      border-radius: var(--radius-lg);
+    }
+  
+    .inventory-card-link {
+      gap: 12px;
+      padding: 12px;
+    }
+  
+    .inventory-card-image {
+      flex-basis: 68px;
+      width: 68px;
+      height: 68px;
+      border-radius: var(--radius-md);
+    }
+  
+    .inventory-card-name {
+      font-size: 15px;
+    }
+  
+    .inventory-card-footer {
+      min-height: 54px;
+      padding: 8px 10px;
+    }
+  
+    .inventory-card-quantity-label {
+      font-size: 12px;
+    }
+  }
+  
+  /* Pack size pill */
 
-
-.inventory-shop-select {
-  border-left: 4px solid var(--shop-colour, var(--line, #e5e5df));
-  transition: border-color 150ms ease;
-}
-
-.inventory-shop-select:focus-visible {
-  outline: 2px solid var(--brand, #164943);
-  outline-offset: 2px;
-}
-
-
-/* Local supermarket logo images */
-
-.shop-brand-image {
-  display: block;
-  width: 44px;
-  height: 28px;
-  flex: 0 0 44px;
-  object-fit: contain;
-  border-radius: 4px;
-}
-
-.shop-brand-badge {
+.pack-size-pill {
   display: inline-flex;
   align-items: center;
-  gap: 8px;
   width: fit-content;
   max-width: 100%;
-  margin-top: 9px;
-  padding: 5px 9px;
+  margin-top: 6px;
+  padding: 4px 9px;
   border: 1px solid var(--line, #e5e5df);
-  border-radius: 9px;
-  background: var(--paper, #fffefa);
+  border-radius: 999px;
+  background: var(--canvas, #f5f5f0);
   color: var(--text, #202520);
-  font-size: 0.75rem;
+  font-size: 0.72rem;
   font-weight: 700;
+  line-height: 1.4;
 }
 
-.shop-brand-logo {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  min-width: 42px;
-  min-height: 27px;
-  padding: 3px 5px;
-  border-radius: 6px;
-  background: var(--shop-colour);
-  color: var(--shop-text);
-  font-size: 0.65rem;
-  font-weight: 800;
-}
+/* ==========================================================================
+   Store section headings
+   ========================================================================== */
 
-.shop-brand-name {
-  overflow-wrap: anywhere;
-}
+   .inventory-groups {
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+    margin-top: 26px;
+  }
+  
+  .inventory-store-section {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+  }
+  
+  .inventory-store-heading {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    padding-bottom: 12px;
+    border-bottom: 1px solid var(--line, #e5e5df);
+  }
+  
+  .inventory-store-identity {
+    display: flex;
+    align-items: center;
+    min-width: 0;
+    gap: 12px;
+  }
+  
+  .inventory-store-identity h2 {
+    margin: 0;
+    color: var(--brand);
+    font-size: 18px;
+    font-weight: 800;
+  }
+  
+  .inventory-store-logo .shop-brand-badge {
+    margin: 0;
+    padding: 0;
+    border: 0;
+    background: transparent;
+  }
+  
+  .inventory-store-logo .shop-brand-image {
+    width: 72px;
+    height: 42px;
+  }
+  
+  .inventory-store-logo .shop-brand-logo {
+    min-width: 42px;
+    min-height: 30px;
+  }
+  
+  .inventory-store-count {
+    flex-shrink: 0;
+    padding: 5px 10px;
+    border-radius: 999px;
+    background: var(--canvas);
+    color: var(--muted);
+    font-size: 11px;
+    font-weight: 700;
+  }
+  
+  @media (max-width: 480px) {
+    .inventory-groups {
+      gap: 24px;
+    }
+  
+    .inventory-store-identity {
+      gap: 9px;
+    }
+  
+    .inventory-store-identity h2 {
+      font-size: 16px;
+    }
+  }
 
-.dark .shop-brand-badge {
-  background: var(--paper, #202520);
-  border-color: var(--line, #454843);
-  color: var(--text, #f5f5f0);
-}
+/* ==================================================
+   Inventory store filter
+   ================================================== */
+
+   .inventory-filter {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    margin: 0 0 24px;
+    padding: 16px;
+    background: var(--paper, #fffefa);
+    border: 1px solid var(--line, #e5e5df);
+    border-radius: 16px;
+  }
+  
+  .inventory-filter label {
+    color: var(--brand, #164943);
+    font-size: 0.72rem;
+    font-weight: 800;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+  
+  .inventory-filter select {
+    width: 100%;
+    min-height: 48px;
+    padding: 0 42px 0 14px;
+  
+    appearance: none;
+    -webkit-appearance: none;
+  
+    background-color: var(--canvas, #f5f5f0);
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='18' height='18' viewBox='0 0 24 24' fill='none' stroke='%23164943' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 14px center;
+  
+    border: 1px solid var(--line, #e5e5df);
+    border-radius: 11px;
+  
+    color: var(--brand, #164943);
+    font: inherit;
+    font-size: 0.9rem;
+    font-weight: 700;
+  
+    cursor: pointer;
+    transition: border-color 160ms ease, box-shadow 160ms ease;
+  }
+  
+  .inventory-filter select:hover {
+    border-color: var(--brand, #164943);
+  }
+  
+  .inventory-filter select:focus {
+    outline: none;
+    border-color: var(--brand, #164943);
+    box-shadow: 0 0 0 3px rgb(22 73 67 / 10%);
+  }
+  
+  .inventory-filter select option {
+    color: #222;
+    background: #fffefa;
+    font-weight: 500;
+  }

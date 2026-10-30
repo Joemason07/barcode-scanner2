@@ -19,7 +19,6 @@ import {
   removeFromInventory,
   scans,
   setBestBeforeDate,
-  getBestBeforeStatus,
   setInventoryShop
 } from '../state.js';
 
@@ -27,6 +26,7 @@ import { lookupProduct } from '../api.js';
 import { startCamera } from '../camera.js';
 import { updateProfile } from '../profile/profile.js';
 import { shopBadge } from '../components/pills/shop-brand.js';
+import { setInventoryFilter } from '../pages/inventory.js';
 
 import {
   expiryStatusPill,
@@ -152,10 +152,13 @@ function setupItemPage(id) {
 // ==================================================
 
 function setupInventoryEvents() {
-  // Use one delegated listener for inventory clicks.
   if (app.dataset.inventoryEvents === 'true') return;
 
   app.dataset.inventoryEvents = 'true';
+
+  // ----------------------------------------------
+  // Inventory buttons
+  // ----------------------------------------------
 
   app.addEventListener('click', event => {
     const target = event.target;
@@ -175,7 +178,6 @@ function setupInventoryEvents() {
 
       increaseInventory(code);
       refreshCurrentPage();
-
       return;
     }
 
@@ -192,7 +194,6 @@ function setupInventoryEvents() {
 
       decreaseInventory(code);
       refreshCurrentPage();
-
       return;
     }
 
@@ -211,7 +212,6 @@ function setupInventoryEvents() {
 
       toast('Product removed from inventory.');
       refreshCurrentPage();
-
       return;
     }
 
@@ -241,16 +241,25 @@ function setupInventoryEvents() {
   });
 
 
-  // Shop selection and best-before date changes.
+  // ----------------------------------------------
+  // Inventory changes
+  // ----------------------------------------------
+
   app.addEventListener('change', event => {
     const target = event.target;
 
     if (!(target instanceof Element)) return;
 
-    // ----------------------------------------------
-    // Shop selection
-    // ----------------------------------------------
+    // Store filter.
+    const inventoryFilter = target.closest('[data-inventory-filter]');
 
+    if (inventoryFilter) {
+      setInventoryFilter(inventoryFilter.value);
+      refreshCurrentPage();
+      return;
+    }
+
+    // Shop selection.
     const shopSelect = target.closest('[data-inventory-shop]');
 
     if (shopSelect) {
@@ -277,13 +286,11 @@ function setupInventoryEvents() {
           : 'Shop selection cleared.'
       );
 
+      refreshCurrentPage();
       return;
     }
 
-    // ----------------------------------------------
-    // Best-before date
-    // ----------------------------------------------
-
+    // Best-before date.
     const dateInput = target.closest('[data-best-before]');
 
     if (!dateInput) return;
@@ -293,10 +300,9 @@ function setupInventoryEvents() {
 
     if (!code) return;
 
-    // Save the date.
     setBestBeforeDate(code, date);
 
-    // Update the status pill immediately.
+    // Update the status pill.
     const statusElement = findByDataAttribute(
       '[data-expiry-status]',
       'expiryStatus',
@@ -304,12 +310,10 @@ function setupInventoryEvents() {
     );
 
     if (statusElement) {
-      const newStatusPill = expiryStatusPill(date, code);
-
-      statusElement.outerHTML = newStatusPill;
+      statusElement.outerHTML = expiryStatusPill(date, code);
     }
 
-    // Update or remove the days-left pill immediately.
+    // Update or remove the days-left pill.
     const daysElement = findByDataAttribute(
       '[data-expiry-days]',
       'expiryDays',
@@ -325,7 +329,6 @@ function setupInventoryEvents() {
         daysElement.remove();
       }
     } else if (newDaysPill) {
-      // If the pill doesn't exist yet, add it to the row.
       const statusRow = dateInput
         .closest('.inventory-card')
         ?.querySelector('.expiry-status-row');
@@ -342,10 +345,6 @@ function setupInventoryEvents() {
 // Inventory DOM helpers
 // ==================================================
 
-/**
- * Finds an element by a data attribute and exact value.
- * Avoids building CSS selectors from barcode values.
- */
 function findByDataAttribute(selector, property, value) {
   return [
     ...app.querySelectorAll(selector)

@@ -9,7 +9,8 @@ const sections = {
     items: [
       { page: 'home', label: 'Home', icon: '⌂' },
       { page: 'scan', label: 'Quick scan', icon: '⌕' },
-      { page: 'history', label: 'Recent scans', icon: '◷' }
+      { page: 'history', label: 'Recent scans', icon: '◷' },
+      { page: 'inventory', label: 'All items', icon: '▤' }
     ]
   },
 
@@ -18,7 +19,8 @@ const sections = {
     icon: '⌕',
     items: [
       { page: 'scan', label: 'Scan', icon: '⌕' },
-      { page: 'history', label: 'History', icon: '◷' }
+      { page: 'history', label: 'History', icon: '◷' },
+      { page: 'inventory', label: 'All items', icon: '▤' }
     ]
   },
 

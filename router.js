@@ -25,7 +25,7 @@ import { scan } from './pages/scan.js';
 
 import { history as historyPage } from './pages/history.js';
 
-import { inventory } from './pages/Inventory.js';
+import { inventory } from './pages/inventory.js';
 
 import { settings } from './pages/settings.js';
 

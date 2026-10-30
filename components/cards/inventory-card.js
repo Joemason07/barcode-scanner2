@@ -10,6 +10,7 @@ import { escapeHtml } from '../../utils.js';
 import { shopBadge } from '../pills/shop-brand.js';
 import {expiryStatusPill,daysLeftPill} from '../pills/days-left.js';
 import { storesDropdown } from '../dropdowns/stores.js';
+import { packSizePill } from '../pills/pack-size.js';
 
 
 export function inventoryCard(product) {
@@ -71,6 +72,8 @@ export function inventoryCard(product) {
           <h2 class="inventory-card-name">
             ${safeName}
           </h2>
+
+          ${packSizePill(product.packSize)}
 
           <span class="inventory-card-code">
             ${safeCode}

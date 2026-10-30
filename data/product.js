@@ -23,7 +23,12 @@ export function createProduct(data = {}, fallbackCode = '') {
     // Product information
     categories: data.categories || '',
     countries: data.countries || '',
+
+    // Pack size
     quantity: data.quantity || '',
+    packSize: data.quantity?.trim() || '',
+
+    // Serving information
     servingSize: data.serving_size || '',
     servingQuantity: data.serving_quantity ?? null,
 

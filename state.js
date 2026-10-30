@@ -301,7 +301,40 @@ function updateInventoryItem(code, updater) {
 
   saveInventory();
 }
+// ==================================================
+// Automatic store detection
+// ==================================================
 
+function detectProductShop(product) {
+  const fields = [
+    product.name,
+    product.brand,
+    product.stores
+  ];
+
+  const productInformation = fields
+    .filter(Boolean)
+    .join(' ')
+    .toLowerCase();
+
+  return STORES.find(shop => {
+    if (!shop || shop === 'Other') {
+      return false;
+    }
+
+    const escapedShop = shop.replace(
+      /[.*+?^${}()|[\]\\]/g,
+      '\\$&'
+    );
+
+    const pattern = new RegExp(
+      `(^|[^a-z0-9])${escapedShop.toLowerCase()}([^a-z0-9]|$)`,
+      'i'
+    );
+
+    return pattern.test(productInformation);
+  }) || '';
+}
 // ==================================================
 // Add to inventory
 // ==================================================
@@ -332,6 +365,8 @@ export function addToInventory(product) {
     return;
   }
 
+  const detectedShop = detectProductShop(product);
+
   inventoryItems = [
     ...inventoryItems,
     {
@@ -339,9 +374,12 @@ export function addToInventory(product) {
       code,
       quantity: 1,
 
-      shop: ALLOWED_SHOPS.has(product.shop)
-        ? product.shop
-        : '',
+      shop:
+        typeof product.shop === 'string' &&
+        product.shop.trim() !== '' &&
+        ALLOWED_SHOPS.has(product.shop)
+          ? product.shop
+          : detectedShop,
 
       bestBeforeDate:
         typeof product.bestBeforeDate === 'string' &&
@@ -362,6 +400,7 @@ export function addToInventory(product) {
  * Increases an existing item's quantity by one.
  */
 export function increaseInventory(code) {
+  console.log('Saving store:', { code, shop });
   updateInventoryItem(code, item => ({
     ...item,
     quantity: normaliseQuantity(item.quantity) + 1

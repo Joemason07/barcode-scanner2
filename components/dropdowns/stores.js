@@ -6,19 +6,9 @@
  */
 
 import { escapeHtml } from '../../utils.js';
+import { STORES } from '../../data/stores/stores.js';
 
-export const STORES = [
-  'Tesco',
-  'Aldi',
-  'Lidl',
-  "Sainsbury's",
-  'Asda',
-  'Morrisons',
-  'Waitrose',
-  'Co-op',
-  'Iceland',
-  'Other'
-];
+export { STORES };
 
 /**
  * Renders the store dropdown.
